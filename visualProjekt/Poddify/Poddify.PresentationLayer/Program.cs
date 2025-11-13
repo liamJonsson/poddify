@@ -1,31 +1,17 @@
-﻿using MongoDB.Driver;
-using Poddify.DataLayer;
-using Poddify.Models;
-
 namespace Poddify.PresentationLayer
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            try
-            {
-                var dbService = new DatabaseContext();
-                var podcasts = dbService.GetPodcastsCollection();
-
-                // Testa att hämta dokument
-                var lista = podcasts.Find(FilterDefinition<Podcast>.Empty).ToList();
-
-                Console.WriteLine("✅ Anslutningen till MongoDB fungerade!");
-                Console.WriteLine($"Antal podcasts i databasen: {lista.Count}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Kunde inte ansluta till databasen:");
-                Console.WriteLine(ex.Message);
-            }
-
-            Console.ReadLine();
+            // To customize application configuration such as set high DPI settings or default font,
+            // see https://aka.ms/applicationconfiguration.
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
         }
     }
 }
