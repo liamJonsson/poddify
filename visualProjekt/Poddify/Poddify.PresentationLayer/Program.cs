@@ -1,3 +1,5 @@
+using Poddify.BusinessLayer;
+
 namespace Poddify.PresentationLayer
 {
     internal static class Program
@@ -12,6 +14,14 @@ namespace Poddify.PresentationLayer
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
+            var dbLisa = new DatabaseContext("poddLisa", "poddLisaPassword");
+
+            var dbLiam = new DatabaseContext("poddLiam", "poddLiamPassword");
+
+            var dbMeja = new DatabaseContext("poddMeja", "poddMejaPassword");
+
+            var dbIftin = new DatabaseContext("poddIftin", "poddIftinPassword");
         }
     }
 }
