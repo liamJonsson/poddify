@@ -17,7 +17,7 @@ namespace Poddify.PresentationLayer
 
             var dbLisa = new DatabaseContext("poddLisa", "poddLisaPassword");
 
-            var dbLiam = new DatabaseContext("poddLiam", "poddLiamPassword");
+            var dbLiam = new DatabaseContext("poddUser", "poddPassword");
 
             var dbMeja = new DatabaseContext("poddMeja", "poddMejaPassword");
 
