@@ -1,6 +1,5 @@
 ﻿using MongoDB.Driver;
 using Poddify.Models;
-using System;
 
 namespace Poddify.BusinessLayer
 {
@@ -15,14 +14,5 @@ namespace Poddify.BusinessLayer
             var _database = client.GetDatabase("PoddifyDB");
             podcastKollektion = _database.GetCollection<Podcast>("Podcasts");
         }
-
-        // Publik metod som Program förväntar sig
-        public IMongoCollection<Podcast> GetPodcastsCollection()
-        {
-            return podcastKollektion;
-        }
-
-        // Alternativt: expose property
-        // public IMongoCollection<Podcast> Podcasts => podcastKollektion;
     }
 }
