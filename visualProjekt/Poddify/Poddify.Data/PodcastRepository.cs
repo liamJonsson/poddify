@@ -20,7 +20,7 @@ namespace Poddify.DataLayer
         }
 
         //Visar en lista över alla podcasts sparade i min samling
-        public async Task<List<Podcast>> GetAllPodcasts()
+        public async Task<List<Podcast?>> GetAllPodcasts()
         {
             return await podcastCollection.Find(FilterDefinition<Podcast>.Empty).ToListAsync();
         }
