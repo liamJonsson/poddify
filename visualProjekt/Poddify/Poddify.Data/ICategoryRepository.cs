@@ -1,6 +1,6 @@
 ﻿using Poddify.Models;
 
-namespace Poddify.BusinessLayer
+namespace Poddify.DataLayer
 {
     public interface ICategoryRepository
     {

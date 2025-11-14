@@ -1,11 +1,11 @@
 ﻿using Poddify.Models;
 
 
-namespace Poddify.BusinessLayer
+namespace Poddify.DataLayer
 {
     public interface IPodcastRepository
     {
-        void AddPodcast(Podcast enPodcast);
+        async Task AddPodcast(Podcast enPodcast);
         List<Podcast> GetAllPodcasts();
         Podcast? GetSpecificPodcast(string id);
         bool UpdateName(Podcast enPodcast);

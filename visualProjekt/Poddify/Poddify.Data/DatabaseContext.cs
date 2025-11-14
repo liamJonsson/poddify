@@ -1,0 +1,23 @@
+﻿using MongoDB.Driver;
+using Poddify.Models;
+
+namespace Poddify.DataLayer
+{
+    public class DatabaseContext
+    {
+        internal readonly IMongoCollection<Podcast> podcastCollection;
+        private readonly IMongoCollection<Category> categoryCollection;
+        private readonly IMongoCollection<Episode> episodeCollection;
+
+
+        public DatabaseContext(string user, string password)
+        {
+            // Du kan lägga in try/catch här för att få bättre felmeddelanden vid uppstart
+            var client = new MongoClient("mongodb+srv://" + user + ":" + password + "@poddify.wqdsssd.mongodb.net/?appName=Poddify");
+            var _database = client.GetDatabase("PoddifyDB");
+            podcastCollection = _database.GetCollection<Podcast>("Podcasts");
+            categoryCollection = _database.GetCollection<Category>("Categories");
+            episodeCollection = _database.GetCollection<Episode>("Episodes");
+        }
+    }
+}
