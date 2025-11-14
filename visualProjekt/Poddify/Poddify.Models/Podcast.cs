@@ -9,8 +9,8 @@ namespace Poddify.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }      
         public string Title { get; set; }
-        public string? Category { get; set; }
         public string RssUrl { get; set; }
-        public List<string> Episodes { get; set; } = new();
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string? CategoryId { get; set; }
     }
 }
