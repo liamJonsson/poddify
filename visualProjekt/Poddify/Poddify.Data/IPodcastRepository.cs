@@ -5,11 +5,11 @@ namespace Poddify.DataLayer
 {
     public interface IPodcastRepository
     {
-        async Task AddPodcast(Podcast enPodcast);
-        List<Podcast> GetAllPodcasts();
-        Podcast? GetSpecificPodcast(string id);
-        bool UpdateName(Podcast enPodcast);
-        bool UpdateCategory(Category enCategory);
-        bool DeletePodcast(Podcast enPodcast);
+        Task AddPodcast(Podcast enPodcast);
+        Task<List<Podcast>> GetAllPodcasts();
+        Task<Podcast?> GetSpecificPodcast(string id);
+        Task<bool> UpdateName(string id, string newTitle);
+        Task<bool> UpdateCategory(string id, string newCategoryId);
+        Task DeletePodcast(string enPodcastId);
     }
 }
