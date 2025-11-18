@@ -4,9 +4,9 @@ namespace Poddify.DataLayer
 {
     public interface ICategoryRepository
     {
-        void AddCategory(Category enCategory);
-        List<Category> GetAllCategories();
-        bool UpdateName(Category enCategory);
-        bool DeleteCategory(Category enCategory);
+        Task AddCategory(string name);
+        Task<List<Category>> GetAllCategories();
+        Task<bool> UpdateName(string id, string newName);
+        Task DeleteCategory(string categoryId);
     }
 }
