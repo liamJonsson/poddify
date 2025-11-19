@@ -17,6 +17,7 @@ namespace Poddify.Models
         public string Description { get; set; }
         public DateTime PublishDate { get; set; }
         public string Link { get; set; }
+        public string? PodcastId { get; set; }
         
     }
 }
