@@ -16,9 +16,7 @@ namespace Poddify.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime PublishDate { get; set; }
-
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string PodcastId { get; set; }
-
+        public string Link { get; set; }
+        
     }
 }
