@@ -11,6 +11,7 @@ namespace Poddify.BusinessLayer
     public class Service
     {
         private PodcastClient podcastClient;
+        private PodcastRepository podcastRepo;
 
         public Service(PodcastClient podcastClient) 
         { 
@@ -19,7 +20,9 @@ namespace Poddify.BusinessLayer
 
         public async Task<List<Episode>> GetAllEpisodes(Podcast onePodcast)
         {
-            var episodes = await podcastClient.GetPodcast(onePodcast.RssUrl);
+            var podcast = await podcastClient.GetPodcast(onePodcast.RssUrl);
+
+            var episodes = podcast.Episodes;
 
             foreach (var episode in episodes)
             {
@@ -28,6 +31,33 @@ namespace Poddify.BusinessLayer
                 episode.Id = onePodcast.Id + "+" + episode.Id;
             }
             return episodes;
+        }
+
+        //Lägger till en podcast i min samling
+        public async Task AddPodcastAsync(Podcast enPodcast)
+        {
+            string id = enPodcast.Id;
+            if (podcastRepo.GetPodcastIdAsync(id) == null)
+            {
+                await podcastRepo.AddPodcastAsync(enPodcast);
+            }
+            else
+            {
+                throw new ArgumentException("Felmeddelande: Kan inte lägga till Podd");
+            }
+        }
+
+        //Hämtar alla Podcast i vår samling
+        public async Task<List<Podcast>> GetAllPodcastsAsync()
+        {
+            if (podcastRepo.GetAllPodcastsAsync() == null)
+            {
+                throw new ArgumentException("Felmeddelande: Finns inget i listan.");
+            }
+            else
+            {
+                return await podcastRepo.GetAllPodcastsAsync();
+            }
         }
     }
 }

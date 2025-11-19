@@ -20,7 +20,7 @@ namespace Poddify.DataLayer
 
         //Hämtar poddar från ett rss-feed
 
-        public async Task<List<Episode>> GetPodcast(string rssUrl)
+        public async Task<Podcast> GetPodcast(string rssUrl)
         {
             using Stream rssStream = await this.oneHttpClient.GetStreamAsync(rssUrl);
             using XmlReader myXmlReader = XmlReader.Create(rssStream);
@@ -31,20 +31,25 @@ namespace Poddify.DataLayer
 
             foreach (SyndicationItem item in rssFeed.Items)
             {
-                Episode oneEpisode = new Episode
+                episodes.Add(new Episode
                 {
                     Id = item.Id,
                     Title = item.Title.Text,
                     Description = item.Summary.Text,
                     PublishDate = item.PublishDate.DateTime,
                     Link = item.Links.First().Uri.ToString()
-                };
-                episodes.Add(oneEpisode);
+                });
             }
 
-            return episodes;
+            Podcast onePodcast = new Podcast
+            {
+                Id = rssFeed.Id,
+                Title = rssFeed.Title?.Text,
+                RssUrl = rssUrl,
+                Episodes = episodes
+            };
 
-
+            return onePodcast;
         }
     }
 }
