@@ -73,5 +73,25 @@ namespace Poddify.BusinessLayer
             }
         }
 
+        //Ta bort en podcast ur min samling
+        public async Task DeletePodcastAsync(string enPodcastId)
+        {
+            Podcast onePodcast = podcastRepo.GetPodcastIdAsync(enPodcastId);
+            if (onePodcast == null)
+            {
+                throw new ArgumentException("Felmeddelande: id finns inte.");
+            }
+            else
+            {
+                if (/*De klickar ja*/)
+                {
+                    await podcastRepo.DeletePodcastAsync(enPodcastId);
+                }
+                else
+                {
+                    //Användare trycker nej och fönstret stängs
+                }
+            }
+        }
     }
 }
