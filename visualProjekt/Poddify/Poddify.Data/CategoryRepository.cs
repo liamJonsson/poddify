@@ -26,10 +26,17 @@ namespace Poddify.DataLayer
             return await categoryCollection.Find(FilterDefinition<Category>.Empty).ToListAsync();
         }
 
-        //Ändra namnet på en kategori
-        public async Task<bool> UpdateName(string id, string newName)
+        //Hämtar en specifik kategori
+        public async Task<Category> GetCategoryIdAsync(string categoryId)
         {
-            var filter = Builders<Category>.Filter.Eq(p => p.Id, id);
+            var filter = Builders<Category>.Filter.Eq(p => p.Id, categoryId);
+            return await categoryCollection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        //Ändra namnet på en kategori
+        public async Task<bool> UpdateName(string categoryId, string newName)
+        {
+            var filter = Builders<Category>.Filter.Eq(p => p.Id, categoryId);
             var update = Builders<Category>.Update.Set(p => p.Name, newName);
             return (await categoryCollection.UpdateOneAsync(filter, update)).ModifiedCount > 0;
         }

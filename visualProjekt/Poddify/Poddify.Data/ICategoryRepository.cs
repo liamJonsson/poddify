@@ -6,7 +6,8 @@ namespace Poddify.DataLayer
     {
         Task AddCategory(string name);
         Task<List<Category>> GetAllCategories();
-        Task<bool> UpdateName(string id, string newName);
+        Task<bool> UpdateName(string categoryId, string newName);
+        Task<Category> GetCategoryIdAsync(string categoryId);
         Task DeleteCategory(string categoryId);
     }
 }

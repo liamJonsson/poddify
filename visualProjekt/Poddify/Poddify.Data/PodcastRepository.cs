@@ -14,19 +14,19 @@ namespace Poddify.DataLayer
         private readonly IMongoCollection<Podcast> podcastCollection;
 
         //Lägger till i min samling (sparas i databasen)
-        public async Task AddPodcastAsync(Podcast enPodcast)
+        public async Task AddPodcastAsync(Podcast onePodcast)
         {
-            await podcastCollection.InsertOneAsync(enPodcast);
+            await podcastCollection.InsertOneAsync(onePodcast);
         }
 
         //Visar en lista över alla podcasts sparade i min samling
-        public async Task<List<Podcast?>> GetAllPodcastsAsync()
+        public async Task<List<Podcast>> GetAllPodcastsAsync()
         {
             return await podcastCollection.Find(FilterDefinition<Podcast>.Empty).ToListAsync();
         }
 
         //Hämtar en specifik podcast
-        public async Task<Podcast?> GetPodcastIdAsync(string id)
+        public async Task<Podcast> GetPodcastIdAsync(string id)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();

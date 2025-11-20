@@ -12,9 +12,10 @@ namespace Poddify.BusinessLayer
     {
         private PodcastClient podcastClient;
         private PodcastRepository podcastRepo;
+        private CategoryRepository categoryRepo;
 
-        public Service(PodcastClient podcastClient) 
-        { 
+        public Service(PodcastClient podcastClient)
+        {
             this.podcastClient = podcastClient;
         }
 
@@ -34,12 +35,12 @@ namespace Poddify.BusinessLayer
         }
 
         //Lägger till en podcast i min samling
-        public async Task AddPodcastAsync(Podcast enPodcast)
+        public async Task AddPodcastAsync(Podcast onePodcast)
         {
-            string id = enPodcast.Id;
-            if (podcastRepo.GetPodcastIdAsync(id) == null)
+            var existing = await podcastRepo.GetPodcastIdAsync(onePodcast.Id);
+            if (existing == null)
             {
-                await podcastRepo.AddPodcastAsync(enPodcast);
+                await podcastRepo.AddPodcastAsync(onePodcast);
             }
             else
             {
@@ -48,28 +49,34 @@ namespace Poddify.BusinessLayer
         }
 
         //Hämtar alla Podcast i vår samling
-        public async Task<List<Podcast?>> GetAllPodcastsAsync()
+        public async Task<List<Podcast>> GetAllPodcastsAsync()
         {
-            if (podcastRepo.GetAllPodcastsAsync() != null)
-            {
-                return await podcastRepo.GetAllPodcastsAsync();
-            }
-            else
-            {
-                throw new ArgumentException("Felmeddelande: Finns inget i listan.");
-            }
+            return await podcastRepo.GetAllPodcastsAsync();
         }
 
-        public async Task<Podcast?> GetPodcastIdAsync(Podcast onePodcast)
+        public async Task<Podcast> GetPodcastIdAsync(string id)
         {
-            if (await podcastRepo.GetPodcastIdAsync(onePodcast.Id) != null)
+            return await podcastRepo.GetPodcastIdAsync(id);
+        }
+
+        public async Task<bool> UpdateNameAsync(string id, string newTitle)
+        {
+            return await UpdateNameAsync(id, newTitle);
+        }
+
+        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId)
+        {
+            var existing = categoryRepo.GetCategoryIdAsync(newCategoryId);
+            if(existing != null)
             {
-                return onePodcast;
+                return await podcastRepo.UpdateCategoryAsync(id, newCategoryId);
             }
-            else
-            {
-                throw new ArgumentException("Felmeddelande: Kan inte hitta podden");
-            }
+            return false;
+        }
+
+        public async Task DeletePodcastAsync(string enPodcastId)
+        {
+            await podcastRepo.DeletePodcastAsync(enPodcastId);
         }
     }
 }
