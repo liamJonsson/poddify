@@ -4,10 +4,11 @@ namespace Poddify.DataLayer
 {
     public interface ICategoryRepository
     {
-        Task AddCategory(string name);
-        Task<List<Category>> GetAllCategories();
-        Task<bool> UpdateName(string categoryId, string newName);
-        Task<Category> GetCategoryIdAsync(string categoryId);
-        Task DeleteCategory(string categoryId);
+        Task AddCategoryAsync(string name);
+        Task<List<Category>> GetAllCategoriesAsync();
+        Task<Category> GetCategoryByNameAsync(string name);
+        Task<Category> GetCategoryByIdAsync(string categoryId);
+        Task<bool> UpdateCategoryNameAsync(string categoryId, string newName);
+        Task DeleteCategoryAsync(string categoryId);
     }
 }

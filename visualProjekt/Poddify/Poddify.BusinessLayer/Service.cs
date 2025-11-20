@@ -19,6 +19,9 @@ namespace Poddify.BusinessLayer
             this.podcastClient = podcastClient;
         }
 
+        //------------------- Rssflöde ------------------//
+
+        //Hämtar alla episoder från en podcast via dess rss-url
         public async Task<List<Episode>> GetAllEpisodes(Podcast onePodcast)
         {
             var podcast = await podcastClient.GetPodcast(onePodcast.RssUrl);
@@ -33,6 +36,8 @@ namespace Poddify.BusinessLayer
             }
             return episodes;
         }
+
+        //------------------- Podcastmetoder ------------------//
 
         //Lägger till en podcast i min samling
         public async Task AddPodcastAsync(Podcast onePodcast)
@@ -54,29 +59,82 @@ namespace Poddify.BusinessLayer
             return await podcastRepo.GetAllPodcastsAsync();
         }
 
+        //Hämtar en specifik podcast via id
         public async Task<Podcast> GetPodcastIdAsync(string id)
         {
             return await podcastRepo.GetPodcastIdAsync(id);
         }
 
+        //Uppdaterar namnet på en podcast
         public async Task<bool> UpdateNameAsync(string id, string newTitle)
         {
             return await UpdateNameAsync(id, newTitle);
         }
 
+        //Uppdaterar kategorin för en podcast
         public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId)
         {
-            var existing = categoryRepo.GetCategoryIdAsync(newCategoryId);
-            if(existing != null)
+            var existing = categoryRepo.GetCategoryByIdAsync(newCategoryId);
+            if (existing != null)
             {
                 return await podcastRepo.UpdateCategoryAsync(id, newCategoryId);
             }
             return false;
         }
 
+        //Raderar en podcast
         public async Task DeletePodcastAsync(string enPodcastId)
         {
             await podcastRepo.DeletePodcastAsync(enPodcastId);
         }
+
+        //------------------- Kategorimetoder ------------------//
+
+        //Lägger till en kategori
+        public async Task AddCategoryAsync(string name)
+        {
+            var existing = await categoryRepo.GetCategoryByNameAsync(name);
+            if (existing == null)
+            {
+                await categoryRepo.AddCategoryAsync(name);
+            }
+            else
+            {
+                throw new ArgumentException("Felmeddelande: Kategori finns redan");
+            }
+        }
+
+        //Hämtar alla kategorier
+        public async Task<List<Category>> GetAllCategoriesAsync()
+        {
+            return await categoryRepo.GetAllCategoriesAsync();
+        }
+
+        //Hämtar en specifik kategori via namn
+        public async Task<Category> GetCategoryByNameAsync(string name)
+        {
+            return await categoryRepo.GetCategoryByNameAsync(name);
+        }
+
+        //Hämtar en specifik kategori via id
+        public async Task<Category> GetCategoryByIdAsync(string categoryId)
+        {
+            return await categoryRepo.GetCategoryByIdAsync(categoryId);
+        }
+
+        //Uppdaterar namnet på en kategori
+        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName)
+        {
+            return await categoryRepo.UpdateCategoryNameAsync(categoryId, newName);
+        }
+
+        //Raderar en kategori
+        public async Task DeleteCategoryAsync(string categoryId)
+        {
+            await categoryRepo.DeleteCategoryAsync(categoryId);
+        }
+
+
+
     }
 }
