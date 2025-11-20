@@ -48,15 +48,27 @@ namespace Poddify.BusinessLayer
         }
 
         //Hämtar alla Podcast i vår samling
-        public async Task<List<Podcast>> GetAllPodcastsAsync()
+        public async Task<List<Podcast?>> GetAllPodcastsAsync()
         {
-            if (podcastRepo.GetAllPodcastsAsync() == null)
+            if (podcastRepo.GetAllPodcastsAsync() != null)
             {
-                throw new ArgumentException("Felmeddelande: Finns inget i listan.");
+                return await podcastRepo.GetAllPodcastsAsync();
             }
             else
             {
-                return await podcastRepo.GetAllPodcastsAsync();
+                throw new ArgumentException("Felmeddelande: Finns inget i listan.");
+            }
+        }
+
+        public async Task<Podcast?> GetPodcastIdAsync(Podcast onePodcast)
+        {
+            if (await podcastRepo.GetPodcastIdAsync(onePodcast.Id) != null)
+            {
+                return onePodcast;
+            }
+            else
+            {
+                throw new ArgumentException("Felmeddelande: Kan inte hitta podden");
             }
         }
     }
