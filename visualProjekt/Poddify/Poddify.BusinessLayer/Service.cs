@@ -13,7 +13,7 @@ namespace Poddify.BusinessLayer
         private PodcastClient podcastClient;
         private PodcastRepository podcastRepo;
         private CategoryRepository categoryRepo;
-
+        private EpisodeRepository episodeRepo;
         public Service(PodcastClient podcastClient)
         {
             this.podcastClient = podcastClient;
@@ -42,7 +42,7 @@ namespace Poddify.BusinessLayer
         //Lägger till en podcast i min samling
         public async Task AddPodcastAsync(Podcast onePodcast)
         {
-            var existing = await podcastRepo.GetPodcastIdAsync(onePodcast.Id);
+            var existing = await podcastRepo.GetPodcastByIdAsync(onePodcast.Id);
             if (existing == null)
             {
                 await podcastRepo.AddPodcastAsync(onePodcast);
@@ -60,9 +60,9 @@ namespace Poddify.BusinessLayer
         }
 
         //Hämtar en specifik podcast via id
-        public async Task<Podcast> GetPodcastIdAsync(string id)
+        public async Task<Podcast> GetPodcastByIdAsync(string id)
         {
-            return await podcastRepo.GetPodcastIdAsync(id);
+            return await podcastRepo.GetPodcastByIdAsync(id);
         }
 
         //Uppdaterar namnet på en podcast
@@ -134,7 +134,14 @@ namespace Poddify.BusinessLayer
             await categoryRepo.DeleteCategoryAsync(categoryId);
         }
 
+        //------------------- Avsnittsmetoder ------------------//
 
+        //Hämtar ett specifikt avsnitt via id
+
+        public async Task<Episode> GetEpisodeByIdAsync(string id)
+        {
+            return await episodeRepo.GetEpisodeByIdAsync(id);
+        }
 
     }
 }

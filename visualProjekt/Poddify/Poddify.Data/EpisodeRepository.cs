@@ -13,15 +13,16 @@ namespace Poddify.DataLayer
         private readonly IMongoCollection<Episode> episodeCollection;
 
         //Visar en lista över alla avsnitt sparade i min samling
-        public async Task<List<Episode>> GetAllEpisodes()
-        {
-            return await episodeCollection.Find(FilterDefinition<Episode>.Empty).ToListAsync();
-        }
+        //public async Task<List<Episode>> GetAllEpisodesAsync(string podcastId)
+        //{
+        //    var filter = Builders<Episode>.Filter.Eq(e => e.PodcastId, podcastId);
+        //    return await episodeCollection.Find(filter).ToListAsync();
+        //}
 
         //Hämtar ett specifik avsnitt
-        public async Task<Episode?> GetSpecificEpisode(string id)
+        public async Task<Episode> GetEpisodeByIdAsync(string id)
         {
-            var filter = Builders<Episode>.Filter.Eq(p => p.Id, id);
+            var filter = Builders<Episode>.Filter.Eq(e => e.Id, id);
             return await episodeCollection.Find(filter).FirstOrDefaultAsync();
         }
     }

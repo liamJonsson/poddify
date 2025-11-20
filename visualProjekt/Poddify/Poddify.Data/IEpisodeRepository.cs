@@ -4,7 +4,7 @@ namespace Poddify.DataLayer
 {
     public interface IEpisodeRepository
     {
-        Task<List<Episode>> GetAllEpisodes();
-        Task<Episode?> GetSpecificEpisode(string id);
+        //Task<List<Episode>> GetAllEpisodesAsync();
+        Task<Episode> GetEpisodeByIdAsync(string id);
     }
 }

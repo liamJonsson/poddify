@@ -26,7 +26,7 @@ namespace Poddify.DataLayer
         }
 
         //Hämtar en specifik podcast
-        public async Task<Podcast> GetPodcastIdAsync(string id)
+        public async Task<Podcast> GetPodcastByIdAsync(string id)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();
