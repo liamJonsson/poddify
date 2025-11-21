@@ -33,7 +33,6 @@ namespace Poddify.DataLayer
             {
                 episodes.Add(new Episode
                 {
-                    Id = item.Id,
                     Title = item.Title.Text,
                     Description = item.Summary.Text,
                     PublishDate = item.PublishDate.DateTime,

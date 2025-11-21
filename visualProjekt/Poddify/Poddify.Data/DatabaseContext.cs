@@ -10,10 +10,10 @@ namespace Poddify.DataLayer
         private readonly IMongoCollection<Episode> episodeCollection;
 
 
-        public DatabaseContext(string user, string password)
+        public DatabaseContext()
         {
             // Du kan lägga in try/catch här för att få bättre felmeddelanden vid uppstart
-            var client = new MongoClient("mongodb+srv://" + user + ":" + password + "@poddify.wqdsssd.mongodb.net/?appName=Poddify");
+            var client = new MongoClient("mongodb+srv://poddUser:poddPassword@poddify.wqdsssd.mongodb.net/?appName=Poddify");
             var _database = client.GetDatabase("PoddifyDB");
             podcastCollection = _database.GetCollection<Podcast>("Podcasts");
             categoryCollection = _database.GetCollection<Category>("Categories");

@@ -1,3 +1,4 @@
+using MongoDB.Bson;
 using Poddify.BusinessLayer;
 using Poddify.DataLayer;
 using Poddify.Models;
@@ -9,9 +10,12 @@ namespace Poddify.PresentationLayer
     {
         private Service oneService;
         private List<Episode> allEpisodes;
+        private Podcast onePodcast;
+
         public Form1(Service oneService)
         {
             this.oneService = oneService;
+            onePodcast = new Podcast();
             InitializeComponent();
         }
 
@@ -51,15 +55,15 @@ namespace Poddify.PresentationLayer
         {
             try
             {
-                var onePodcast = new Podcast();
                 onePodcast.RssUrl = tbURL.Text;
-
+                onePodcast.Id = ObjectId.GenerateNewId().ToString();
+                
                 allEpisodes = await oneService.GetAllEpisodes(onePodcast);
 
                 lbAllEpisodes.Items.Clear();
                 rbtSpecificEpisode.Clear();
 
-                foreach(Episode oneEpisode in allEpisodes)
+                foreach (Episode oneEpisode in allEpisodes)
                 {
                     lbAllEpisodes.Items.Add(oneEpisode);
                 }
@@ -69,6 +73,19 @@ namespace Poddify.PresentationLayer
             catch (Exception ex)
             {
                 MessageBox.Show("Din sökväg gav ingen träff");
+            }
+        }
+
+        private async void btnSavePodcast_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                await oneService.AddPodcastAsync(onePodcast);
+                MessageBox.Show("Podden sparades!");
+            }
+            catch
+            {
+                MessageBox.Show("Det gick inte att spara podden");
             }
         }
     }

@@ -34,7 +34,7 @@
             lblGiveCategoryToPodcast = new Label();
             textBox1 = new TextBox();
             lblNamePodcast = new Label();
-            button1 = new Button();
+            btnSavePodcast = new Button();
             rbtSpecificEpisode = new RichTextBox();
             lbAllEpisodes = new ListBox();
             btnGetPodcast = new Button();
@@ -87,7 +87,7 @@
             mainFrame.Controls.Add(lblGiveCategoryToPodcast);
             mainFrame.Controls.Add(textBox1);
             mainFrame.Controls.Add(lblNamePodcast);
-            mainFrame.Controls.Add(button1);
+            mainFrame.Controls.Add(btnSavePodcast);
             mainFrame.Controls.Add(rbtSpecificEpisode);
             mainFrame.Controls.Add(lbAllEpisodes);
             mainFrame.Controls.Add(btnGetPodcast);
@@ -135,14 +135,15 @@
             lblNamePodcast.TabIndex = 6;
             lblNamePodcast.Text = "Namnge podd";
             // 
-            // button1
+            // btnSavePodcast
             // 
-            button1.Location = new Point(658, 366);
-            button1.Name = "button1";
-            button1.Size = new Size(189, 29);
-            button1.TabIndex = 5;
-            button1.Text = "Lägg till podd i samling";
-            button1.UseVisualStyleBackColor = true;
+            btnSavePodcast.Location = new Point(658, 366);
+            btnSavePodcast.Name = "btnSavePodcast";
+            btnSavePodcast.Size = new Size(189, 29);
+            btnSavePodcast.TabIndex = 5;
+            btnSavePodcast.Text = "Lägg till podd i samling";
+            btnSavePodcast.UseVisualStyleBackColor = true;
+            btnSavePodcast.Click += btnSavePodcast_Click;
             // 
             // rbtSpecificEpisode
             // 
@@ -494,5 +495,6 @@
         private TextBox tbCreateCategory;
         private Label lblCreateCategory;
         private Label lblInformation;
+        private Button btnSavePodcast;
     }
 }

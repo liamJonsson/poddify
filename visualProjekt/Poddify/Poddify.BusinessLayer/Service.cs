@@ -10,6 +10,7 @@ namespace Poddify.BusinessLayer
 {
     public class Service
     {
+        private DatabaseContext db = new DatabaseContext();
         private PodcastClient podcastClient;
         private PodcastRepository podcastRepo;
         private CategoryRepository categoryRepo;
@@ -17,6 +18,9 @@ namespace Poddify.BusinessLayer
         public Service(PodcastClient podcastClient)
         {
             this.podcastClient = podcastClient;
+            podcastRepo = new PodcastRepository(db);
+            categoryRepo = new CategoryRepository();
+            episodeRepo = new EpisodeRepository();
         }
 
         //------------------- Rssflöde ------------------//
@@ -60,7 +64,7 @@ namespace Poddify.BusinessLayer
         }
 
         //Hämtar en specifik podcast via id
-        public async Task<Podcast> GetPodcastByIdAsync(string id)
+        public async Task<Podcast?> GetPodcastByIdAsync(string id)
         {
             return await podcastRepo.GetPodcastByIdAsync(id);
         }

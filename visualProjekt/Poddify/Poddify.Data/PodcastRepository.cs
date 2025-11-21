@@ -13,6 +13,13 @@ namespace Poddify.DataLayer
     {
         private readonly IMongoCollection<Podcast> podcastCollection;
 
+        public PodcastRepository(DatabaseContext db)
+        {
+            podcastCollection = db.podcastCollection;
+        }
+
+
+
         //Lägger till i min samling (sparas i databasen)
         public async Task AddPodcastAsync(Podcast onePodcast)
         {
@@ -26,7 +33,7 @@ namespace Poddify.DataLayer
         }
 
         //Hämtar en specifik podcast
-        public async Task<Podcast> GetPodcastByIdAsync(string id)
+        public async Task<Podcast?> GetPodcastByIdAsync(string id)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();

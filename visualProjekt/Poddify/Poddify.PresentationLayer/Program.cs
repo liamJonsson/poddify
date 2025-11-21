@@ -13,15 +13,6 @@ namespace Poddify.PresentationLayer
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            
-
-            var dbLisa = new DatabaseContext("poddLisa", "poddLisaPassword");
-
-            var dbLiam = new DatabaseContext("poddUser", "poddPassword");
-
-            var dbMeja = new DatabaseContext("poddMeja", "poddMejaPassword");
-
-            var dbIftin = new DatabaseContext("poddIftin", "poddIftinPassword");
 
             HttpClient http = new HttpClient();
             var client = new PodcastClient(http);
