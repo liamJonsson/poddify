@@ -42,7 +42,6 @@ namespace Poddify.DataLayer
 
             Podcast onePodcast = new Podcast
             {
-                Id = rssFeed.Id,
                 Title = rssFeed.Title?.Text,
                 RssUrl = rssUrl,
                 Episodes = episodes

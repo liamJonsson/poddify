@@ -19,7 +19,7 @@ namespace Poddify.PresentationLayer
             var service = new Service(client);
 
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1(service));
+            Application.Run(new Form1());
         }
     }
 }

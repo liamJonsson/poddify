@@ -10,13 +10,15 @@ namespace Poddify.PresentationLayer
     {
         private Service oneService;
         private List<Episode> allEpisodes;
+        private PodcastClient oneClient;
         private Podcast onePodcast;
 
-        public Form1(Service oneService)
+        public Form1()
         {
-            this.oneService = oneService;
-            onePodcast = new Podcast();
             InitializeComponent();
+            oneClient = new PodcastClient(new HttpClient());
+            oneService = new Service(oneClient);
+            onePodcast = new Podcast();
         }
 
         private void mainFrame_Click(object sender, EventArgs e)
@@ -55,6 +57,7 @@ namespace Poddify.PresentationLayer
         {
             try
             {
+                onePodcast = await oneClient.GetPodcast(tbURL.Text);
                 onePodcast.RssUrl = tbURL.Text;
                 onePodcast.Id = ObjectId.GenerateNewId().ToString();
                 

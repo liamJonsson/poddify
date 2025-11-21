@@ -19,7 +19,7 @@ namespace Poddify.BusinessLayer
         {
             this.podcastClient = podcastClient;
             podcastRepo = new PodcastRepository(db);
-            categoryRepo = new CategoryRepository();
+            categoryRepo = new CategoryRepository(); //db för att å den att fungera
             episodeRepo = new EpisodeRepository();
         }
 
