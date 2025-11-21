@@ -53,7 +53,19 @@
             lbMyCategories = new ListBox();
             lblMyCatgories = new Label();
             btnDeleteCategory = new Button();
-            button2 = new Button();
+            btnSaveCategory = new Button();
+            tbEditName = new TextBox();
+            lbEditName = new Label();
+            textBox3 = new TextBox();
+            lblEditCategory = new Label();
+            lblEditCategoryName = new Label();
+            tbEditCategoryName = new TextBox();
+            label1 = new Label();
+            lblCreateCategory = new Label();
+            tbCreateCategory = new TextBox();
+            btnSaveCreatedCategory = new Button();
+            btnDeletePodcast = new Button();
+            lblInformation = new Label();
             tabControl.SuspendLayout();
             mainFrame.SuspendLayout();
             myCollection.SuspendLayout();
@@ -66,7 +78,7 @@
             tabControl.Location = new Point(12, 12);
             tabControl.Name = "tabControl";
             tabControl.SelectedIndex = 0;
-            tabControl.Size = new Size(1362, 463);
+            tabControl.Size = new Size(1362, 562);
             tabControl.TabIndex = 0;
             // 
             // mainFrame
@@ -84,7 +96,7 @@
             mainFrame.Location = new Point(4, 29);
             mainFrame.Name = "mainFrame";
             mainFrame.Padding = new Padding(3);
-            mainFrame.Size = new Size(1354, 430);
+            mainFrame.Size = new Size(1354, 487);
             mainFrame.TabIndex = 0;
             mainFrame.Text = "Startsida";
             mainFrame.UseVisualStyleBackColor = true;
@@ -92,7 +104,19 @@
             // 
             // myCollection
             // 
-            myCollection.Controls.Add(button2);
+            myCollection.Controls.Add(lblInformation);
+            myCollection.Controls.Add(btnDeletePodcast);
+            myCollection.Controls.Add(btnSaveCreatedCategory);
+            myCollection.Controls.Add(tbCreateCategory);
+            myCollection.Controls.Add(lblCreateCategory);
+            myCollection.Controls.Add(label1);
+            myCollection.Controls.Add(tbEditCategoryName);
+            myCollection.Controls.Add(lblEditCategoryName);
+            myCollection.Controls.Add(lblEditCategory);
+            myCollection.Controls.Add(textBox3);
+            myCollection.Controls.Add(lbEditName);
+            myCollection.Controls.Add(tbEditName);
+            myCollection.Controls.Add(btnSaveCategory);
             myCollection.Controls.Add(btnDeleteCategory);
             myCollection.Controls.Add(lblMyCatgories);
             myCollection.Controls.Add(lbMyCategories);
@@ -108,10 +132,11 @@
             myCollection.Location = new Point(4, 29);
             myCollection.Name = "myCollection";
             myCollection.Padding = new Padding(3);
-            myCollection.Size = new Size(1354, 430);
+            myCollection.Size = new Size(1354, 529);
             myCollection.TabIndex = 1;
             myCollection.Text = "Mina poddar";
             myCollection.UseVisualStyleBackColor = true;
+            myCollection.Click += myCollection_Click;
             // 
             // lblURL
             // 
@@ -183,15 +208,16 @@
             // lblGiveCategoryToPodcast
             // 
             lblGiveCategoryToPodcast.AutoSize = true;
-            lblGiveCategoryToPodcast.Location = new Point(221, 345);
+            lblGiveCategoryToPodcast.Location = new Point(197, 345);
             lblGiveCategoryToPodcast.Name = "lblGiveCategoryToPodcast";
             lblGiveCategoryToPodcast.Size = new Size(137, 20);
             lblGiveCategoryToPodcast.TabIndex = 8;
             lblGiveCategoryToPodcast.Text = "Tilldela en kategori";
+            lblGiveCategoryToPodcast.Click += lblGiveCategoryToPodcast_Click;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(221, 368);
+            textBox2.Location = new Point(197, 368);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(153, 27);
             textBox2.TabIndex = 9;
@@ -199,7 +225,7 @@
             // lbMyPodcasts
             // 
             lbMyPodcasts.FormattingEnabled = true;
-            lbMyPodcasts.Location = new Point(27, 77);
+            lbMyPodcasts.Location = new Point(29, 54);
             lbMyPodcasts.Name = "lbMyPodcasts";
             lbMyPodcasts.Size = new Size(257, 224);
             lbMyPodcasts.TabIndex = 0;
@@ -207,14 +233,14 @@
             // lbEpisodesOfAPodcast
             // 
             lbEpisodesOfAPodcast.FormattingEnabled = true;
-            lbEpisodesOfAPodcast.Location = new Point(319, 77);
+            lbEpisodesOfAPodcast.Location = new Point(321, 54);
             lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
             lbEpisodesOfAPodcast.Size = new Size(258, 224);
             lbEpisodesOfAPodcast.TabIndex = 1;
             // 
             // rbtMoreInformationEpisode
             // 
-            rbtMoreInformationEpisode.Location = new Point(623, 77);
+            rbtMoreInformationEpisode.Location = new Point(625, 54);
             rbtMoreInformationEpisode.Name = "rbtMoreInformationEpisode";
             rbtMoreInformationEpisode.Size = new Size(245, 224);
             rbtMoreInformationEpisode.TabIndex = 2;
@@ -223,7 +249,7 @@
             // lblMyPodcasts
             // 
             lblMyPodcasts.AutoSize = true;
-            lblMyPodcasts.Location = new Point(27, 46);
+            lblMyPodcasts.Location = new Point(29, 23);
             lblMyPodcasts.Name = "lblMyPodcasts";
             lblMyPodcasts.Size = new Size(95, 20);
             lblMyPodcasts.TabIndex = 3;
@@ -232,7 +258,7 @@
             // lblEpisodesOfPodcast
             // 
             lblEpisodesOfPodcast.AutoSize = true;
-            lblEpisodesOfPodcast.Location = new Point(319, 46);
+            lblEpisodesOfPodcast.Location = new Point(321, 23);
             lblEpisodesOfPodcast.Name = "lblEpisodesOfPodcast";
             lblEpisodesOfPodcast.Size = new Size(112, 20);
             lblEpisodesOfPodcast.TabIndex = 4;
@@ -241,7 +267,7 @@
             // lblSpecificInformationEpisode
             // 
             lblSpecificInformationEpisode.AutoSize = true;
-            lblSpecificInformationEpisode.Location = new Point(623, 46);
+            lblSpecificInformationEpisode.Location = new Point(625, 23);
             lblSpecificInformationEpisode.Name = "lblSpecificInformationEpisode";
             lblSpecificInformationEpisode.Size = new Size(121, 20);
             lblSpecificInformationEpisode.TabIndex = 5;
@@ -249,7 +275,7 @@
             // 
             // btnSort
             // 
-            btnSort.Location = new Point(128, 42);
+            btnSort.Location = new Point(130, 19);
             btnSort.Name = "btnSort";
             btnSort.Size = new Size(156, 29);
             btnSort.TabIndex = 6;
@@ -258,26 +284,26 @@
             // 
             // btnEditName
             // 
-            btnEditName.Location = new Point(27, 323);
+            btnEditName.Location = new Point(189, 316);
             btnEditName.Name = "btnEditName";
-            btnEditName.Size = new Size(175, 29);
+            btnEditName.Size = new Size(99, 29);
             btnEditName.TabIndex = 7;
-            btnEditName.Text = "Redigera namn";
+            btnEditName.Text = "Spara";
             btnEditName.UseVisualStyleBackColor = true;
             // 
             // btnEditCategory
             // 
-            btnEditCategory.Location = new Point(27, 369);
+            btnEditCategory.Location = new Point(189, 383);
             btnEditCategory.Name = "btnEditCategory";
-            btnEditCategory.Size = new Size(174, 29);
+            btnEditCategory.Size = new Size(99, 29);
             btnEditCategory.TabIndex = 8;
-            btnEditCategory.Text = "Redigera kategori";
+            btnEditCategory.Text = "Spara";
             btnEditCategory.UseVisualStyleBackColor = true;
             // 
             // lbMyCategories
             // 
             lbMyCategories.FormattingEnabled = true;
-            lbMyCategories.Location = new Point(1082, 77);
+            lbMyCategories.Location = new Point(1084, 54);
             lbMyCategories.Name = "lbMyCategories";
             lbMyCategories.Size = new Size(241, 224);
             lbMyCategories.TabIndex = 9;
@@ -285,7 +311,7 @@
             // lblMyCatgories
             // 
             lblMyCatgories.AutoSize = true;
-            lblMyCatgories.Location = new Point(1082, 46);
+            lblMyCatgories.Location = new Point(1084, 23);
             lblMyCatgories.Name = "lblMyCatgories";
             lblMyCatgories.Size = new Size(114, 20);
             lblMyCatgories.TabIndex = 10;
@@ -294,27 +320,128 @@
             // 
             // btnDeleteCategory
             // 
-            btnDeleteCategory.Location = new Point(1192, 369);
+            btnDeleteCategory.Location = new Point(1084, 435);
             btnDeleteCategory.Name = "btnDeleteCategory";
-            btnDeleteCategory.Size = new Size(131, 29);
+            btnDeleteCategory.Size = new Size(241, 29);
             btnDeleteCategory.TabIndex = 11;
-            btnDeleteCategory.Text = "Radera kategori";
+            btnDeleteCategory.Text = "Ta bort kategori";
             btnDeleteCategory.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnSaveCategory
             // 
-            button2.Location = new Point(1192, 323);
-            button2.Name = "button2";
-            button2.Size = new Size(131, 29);
-            button2.TabIndex = 12;
-            button2.Text = "Ändra namn";
-            button2.UseVisualStyleBackColor = true;
+            btnSaveCategory.Location = new Point(1233, 382);
+            btnSaveCategory.Name = "btnSaveCategory";
+            btnSaveCategory.Size = new Size(92, 29);
+            btnSaveCategory.TabIndex = 12;
+            btnSaveCategory.Text = "Spara";
+            btnSaveCategory.UseVisualStyleBackColor = true;
+            // 
+            // tbEditName
+            // 
+            tbEditName.Location = new Point(29, 318);
+            tbEditName.Name = "tbEditName";
+            tbEditName.Size = new Size(154, 27);
+            tbEditName.TabIndex = 13;
+            // 
+            // lbEditName
+            // 
+            lbEditName.AutoSize = true;
+            lbEditName.Location = new Point(29, 295);
+            lbEditName.Name = "lbEditName";
+            lbEditName.Size = new Size(146, 20);
+            lbEditName.TabIndex = 14;
+            lbEditName.Text = "Redigera poddnamn";
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(29, 383);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(154, 27);
+            textBox3.TabIndex = 15;
+            // 
+            // lblEditCategory
+            // 
+            lblEditCategory.AutoSize = true;
+            lblEditCategory.Location = new Point(29, 360);
+            lblEditCategory.Name = "lblEditCategory";
+            lblEditCategory.Size = new Size(190, 20);
+            lblEditCategory.TabIndex = 16;
+            lblEditCategory.Text = "Redigera poddens kategori";
+            lblEditCategory.Click += lblEditCategory_Click;
+            // 
+            // lblEditCategoryName
+            // 
+            lblEditCategoryName.AutoSize = true;
+            lblEditCategoryName.Location = new Point(1084, 361);
+            lblEditCategoryName.Name = "lblEditCategoryName";
+            lblEditCategoryName.Size = new Size(170, 20);
+            lblEditCategoryName.TabIndex = 17;
+            lblEditCategoryName.Text = "Redigera katgorinamnet";
+            // 
+            // tbEditCategoryName
+            // 
+            tbEditCategoryName.Location = new Point(1084, 384);
+            tbEditCategoryName.Name = "tbEditCategoryName";
+            tbEditCategoryName.Size = new Size(143, 27);
+            tbEditCategoryName.TabIndex = 18;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(1082, 414);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 20);
+            label1.TabIndex = 19;
+            // 
+            // lblCreateCategory
+            // 
+            lblCreateCategory.AutoSize = true;
+            lblCreateCategory.Location = new Point(1084, 295);
+            lblCreateCategory.Name = "lblCreateCategory";
+            lblCreateCategory.Size = new Size(128, 20);
+            lblCreateCategory.TabIndex = 20;
+            lblCreateCategory.Text = "Skapa en kategori";
+            // 
+            // tbCreateCategory
+            // 
+            tbCreateCategory.Location = new Point(1084, 318);
+            tbCreateCategory.Name = "tbCreateCategory";
+            tbCreateCategory.Size = new Size(143, 27);
+            tbCreateCategory.TabIndex = 21;
+            // 
+            // btnSaveCreatedCategory
+            // 
+            btnSaveCreatedCategory.Location = new Point(1233, 317);
+            btnSaveCreatedCategory.Name = "btnSaveCreatedCategory";
+            btnSaveCreatedCategory.Size = new Size(92, 29);
+            btnSaveCreatedCategory.TabIndex = 22;
+            btnSaveCreatedCategory.Text = "Spara";
+            btnSaveCreatedCategory.UseVisualStyleBackColor = true;
+            // 
+            // btnDeletePodcast
+            // 
+            btnDeletePodcast.Location = new Point(31, 435);
+            btnDeletePodcast.Name = "btnDeletePodcast";
+            btnDeletePodcast.Size = new Size(257, 29);
+            btnDeletePodcast.TabIndex = 23;
+            btnDeletePodcast.Text = "Ta bort podd";
+            btnDeletePodcast.UseVisualStyleBackColor = true;
+            // 
+            // lblInformation
+            // 
+            lblInformation.AutoSize = true;
+            lblInformation.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblInformation.Location = new Point(542, 505);
+            lblInformation.Name = "lblInformation";
+            lblInformation.Size = new Size(367, 20);
+            lblInformation.TabIndex = 24;
+            lblInformation.Text = "Markera en rad i en lista för att redigera eller ta bort den";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1386, 499);
+            ClientSize = new Size(1386, 575);
             Controls.Add(tabControl);
             Name = "Form1";
             Text = "Form1";
@@ -353,6 +480,18 @@
         private Label lblMyCatgories;
         private ListBox lbMyCategories;
         private Button btnDeleteCategory;
-        private Button button2;
+        private Button btnSaveCategory;
+        private Label lbEditName;
+        private TextBox tbEditName;
+        private Label lblEditCategoryName;
+        private Label lblEditCategory;
+        private TextBox textBox3;
+        private Label label1;
+        private TextBox tbEditCategoryName;
+        private Button btnDeletePodcast;
+        private Button btnSaveCreatedCategory;
+        private TextBox tbCreateCategory;
+        private Label lblCreateCategory;
+        private Label lblInformation;
     }
 }

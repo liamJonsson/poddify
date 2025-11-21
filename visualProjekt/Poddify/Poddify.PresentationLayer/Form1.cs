@@ -21,5 +21,20 @@ namespace Poddify.PresentationLayer
         {
 
         }
+
+        private void myCollection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblEditCategory_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblGiveCategoryToPodcast_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
