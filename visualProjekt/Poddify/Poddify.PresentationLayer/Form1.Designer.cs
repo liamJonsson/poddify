@@ -30,42 +30,42 @@
         {
             tabControl = new TabControl();
             mainFrame = new TabPage();
-            myCollection = new TabPage();
-            lblURL = new Label();
-            tbURL = new TextBox();
-            btnGetPodcast = new Button();
-            lbAllEpisodes = new ListBox();
-            rbtSpecificEpisode = new RichTextBox();
-            button1 = new Button();
-            lblNamePodcast = new Label();
-            textBox1 = new TextBox();
-            lblGiveCategoryToPodcast = new Label();
             textBox2 = new TextBox();
-            lbMyPodcasts = new ListBox();
-            lbEpisodesOfAPodcast = new ListBox();
-            rbtMoreInformationEpisode = new RichTextBox();
-            lblMyPodcasts = new Label();
-            lblEpisodesOfPodcast = new Label();
-            lblSpecificInformationEpisode = new Label();
-            btnSort = new Button();
-            btnEditName = new Button();
-            btnEditCategory = new Button();
-            lbMyCategories = new ListBox();
-            lblMyCatgories = new Label();
-            btnDeleteCategory = new Button();
-            btnSaveCategory = new Button();
-            tbEditName = new TextBox();
-            lbEditName = new Label();
-            textBox3 = new TextBox();
-            lblEditCategory = new Label();
-            lblEditCategoryName = new Label();
-            tbEditCategoryName = new TextBox();
-            label1 = new Label();
-            lblCreateCategory = new Label();
-            tbCreateCategory = new TextBox();
-            btnSaveCreatedCategory = new Button();
-            btnDeletePodcast = new Button();
+            lblGiveCategoryToPodcast = new Label();
+            textBox1 = new TextBox();
+            lblNamePodcast = new Label();
+            button1 = new Button();
+            rbtSpecificEpisode = new RichTextBox();
+            lbAllEpisodes = new ListBox();
+            btnGetPodcast = new Button();
+            tbURL = new TextBox();
+            lblURL = new Label();
+            myCollection = new TabPage();
             lblInformation = new Label();
+            btnDeletePodcast = new Button();
+            btnSaveCreatedCategory = new Button();
+            tbCreateCategory = new TextBox();
+            lblCreateCategory = new Label();
+            label1 = new Label();
+            tbEditCategoryName = new TextBox();
+            lblEditCategoryName = new Label();
+            lblEditCategory = new Label();
+            textBox3 = new TextBox();
+            lbEditName = new Label();
+            tbEditName = new TextBox();
+            btnSaveCategory = new Button();
+            btnDeleteCategory = new Button();
+            lblMyCatgories = new Label();
+            lbMyCategories = new ListBox();
+            btnEditCategory = new Button();
+            btnEditName = new Button();
+            btnSort = new Button();
+            lblSpecificInformationEpisode = new Label();
+            lblEpisodesOfPodcast = new Label();
+            lblMyPodcasts = new Label();
+            rbtMoreInformationEpisode = new RichTextBox();
+            lbEpisodesOfAPodcast = new ListBox();
+            lbMyPodcasts = new ListBox();
             tabControl.SuspendLayout();
             mainFrame.SuspendLayout();
             myCollection.SuspendLayout();
@@ -96,11 +96,96 @@
             mainFrame.Location = new Point(4, 29);
             mainFrame.Name = "mainFrame";
             mainFrame.Padding = new Padding(3);
-            mainFrame.Size = new Size(1354, 487);
+            mainFrame.Size = new Size(1354, 529);
             mainFrame.TabIndex = 0;
             mainFrame.Text = "Startsida";
             mainFrame.UseVisualStyleBackColor = true;
             mainFrame.Click += mainFrame_Click;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(197, 368);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(153, 27);
+            textBox2.TabIndex = 9;
+            // 
+            // lblGiveCategoryToPodcast
+            // 
+            lblGiveCategoryToPodcast.AutoSize = true;
+            lblGiveCategoryToPodcast.Location = new Point(197, 345);
+            lblGiveCategoryToPodcast.Name = "lblGiveCategoryToPodcast";
+            lblGiveCategoryToPodcast.Size = new Size(137, 20);
+            lblGiveCategoryToPodcast.TabIndex = 8;
+            lblGiveCategoryToPodcast.Text = "Tilldela en kategori";
+            lblGiveCategoryToPodcast.Click += lblGiveCategoryToPodcast_Click;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(25, 368);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(125, 27);
+            textBox1.TabIndex = 7;
+            // 
+            // lblNamePodcast
+            // 
+            lblNamePodcast.AutoSize = true;
+            lblNamePodcast.Location = new Point(25, 345);
+            lblNamePodcast.Name = "lblNamePodcast";
+            lblNamePodcast.Size = new Size(106, 20);
+            lblNamePodcast.TabIndex = 6;
+            lblNamePodcast.Text = "Namnge podd";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(658, 366);
+            button1.Name = "button1";
+            button1.Size = new Size(189, 29);
+            button1.TabIndex = 5;
+            button1.Text = "Lägg till podd i samling";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // rbtSpecificEpisode
+            // 
+            rbtSpecificEpisode.Location = new Point(450, 87);
+            rbtSpecificEpisode.Name = "rbtSpecificEpisode";
+            rbtSpecificEpisode.Size = new Size(397, 244);
+            rbtSpecificEpisode.TabIndex = 4;
+            rbtSpecificEpisode.Text = "";
+            rbtSpecificEpisode.TextChanged += rbtSpecificEpisode_TextChanged;
+            // 
+            // lbAllEpisodes
+            // 
+            lbAllEpisodes.FormattingEnabled = true;
+            lbAllEpisodes.Location = new Point(25, 87);
+            lbAllEpisodes.Name = "lbAllEpisodes";
+            lbAllEpisodes.Size = new Size(406, 244);
+            lbAllEpisodes.TabIndex = 3;
+            // 
+            // btnGetPodcast
+            // 
+            btnGetPodcast.Location = new Point(450, 38);
+            btnGetPodcast.Name = "btnGetPodcast";
+            btnGetPodcast.Size = new Size(194, 29);
+            btnGetPodcast.TabIndex = 2;
+            btnGetPodcast.Text = "Visa poddens avsnitt";
+            btnGetPodcast.UseVisualStyleBackColor = true;
+            btnGetPodcast.Click += btnGetPodcast_Click;
+            // 
+            // tbURL
+            // 
+            tbURL.Location = new Point(25, 38);
+            tbURL.Name = "tbURL";
+            tbURL.Size = new Size(406, 27);
+            tbURL.TabIndex = 1;
+            // 
+            // lblURL
+            // 
+            lblURL.AutoSize = true;
+            lblURL.Location = new Point(25, 15);
+            lblURL.Name = "lblURL";
+            lblURL.Size = new Size(94, 20);
+            lblURL.TabIndex = 0;
+            lblURL.Text = "Ange en URL";
             // 
             // myCollection
             // 
@@ -138,226 +223,73 @@
             myCollection.UseVisualStyleBackColor = true;
             myCollection.Click += myCollection_Click;
             // 
-            // lblURL
+            // lblInformation
             // 
-            lblURL.AutoSize = true;
-            lblURL.Location = new Point(25, 15);
-            lblURL.Name = "lblURL";
-            lblURL.Size = new Size(94, 20);
-            lblURL.TabIndex = 0;
-            lblURL.Text = "Ange en URL";
+            lblInformation.AutoSize = true;
+            lblInformation.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblInformation.Location = new Point(542, 505);
+            lblInformation.Name = "lblInformation";
+            lblInformation.Size = new Size(367, 20);
+            lblInformation.TabIndex = 24;
+            lblInformation.Text = "Markera en rad i en lista för att redigera eller ta bort den";
             // 
-            // tbURL
+            // btnDeletePodcast
             // 
-            tbURL.Location = new Point(25, 38);
-            tbURL.Name = "tbURL";
-            tbURL.Size = new Size(406, 27);
-            tbURL.TabIndex = 1;
+            btnDeletePodcast.Location = new Point(31, 435);
+            btnDeletePodcast.Name = "btnDeletePodcast";
+            btnDeletePodcast.Size = new Size(257, 29);
+            btnDeletePodcast.TabIndex = 23;
+            btnDeletePodcast.Text = "Ta bort podd";
+            btnDeletePodcast.UseVisualStyleBackColor = true;
             // 
-            // btnGetPodcast
+            // btnSaveCreatedCategory
             // 
-            btnGetPodcast.Location = new Point(450, 38);
-            btnGetPodcast.Name = "btnGetPodcast";
-            btnGetPodcast.Size = new Size(194, 29);
-            btnGetPodcast.TabIndex = 2;
-            btnGetPodcast.Text = "Visa poddens avsnitt";
-            btnGetPodcast.UseVisualStyleBackColor = true;
+            btnSaveCreatedCategory.Location = new Point(1233, 317);
+            btnSaveCreatedCategory.Name = "btnSaveCreatedCategory";
+            btnSaveCreatedCategory.Size = new Size(92, 29);
+            btnSaveCreatedCategory.TabIndex = 22;
+            btnSaveCreatedCategory.Text = "Spara";
+            btnSaveCreatedCategory.UseVisualStyleBackColor = true;
             // 
-            // lbAllEpisodes
+            // tbCreateCategory
             // 
-            lbAllEpisodes.FormattingEnabled = true;
-            lbAllEpisodes.Location = new Point(25, 87);
-            lbAllEpisodes.Name = "lbAllEpisodes";
-            lbAllEpisodes.Size = new Size(406, 244);
-            lbAllEpisodes.TabIndex = 3;
+            tbCreateCategory.Location = new Point(1084, 318);
+            tbCreateCategory.Name = "tbCreateCategory";
+            tbCreateCategory.Size = new Size(143, 27);
+            tbCreateCategory.TabIndex = 21;
             // 
-            // rbtSpecificEpisode
+            // lblCreateCategory
             // 
-            rbtSpecificEpisode.Location = new Point(450, 87);
-            rbtSpecificEpisode.Name = "rbtSpecificEpisode";
-            rbtSpecificEpisode.Size = new Size(397, 244);
-            rbtSpecificEpisode.TabIndex = 4;
-            rbtSpecificEpisode.Text = "";
-            rbtSpecificEpisode.TextChanged += rbtSpecificEpisode_TextChanged;
+            lblCreateCategory.AutoSize = true;
+            lblCreateCategory.Location = new Point(1084, 295);
+            lblCreateCategory.Name = "lblCreateCategory";
+            lblCreateCategory.Size = new Size(128, 20);
+            lblCreateCategory.TabIndex = 20;
+            lblCreateCategory.Text = "Skapa en kategori";
             // 
-            // button1
+            // label1
             // 
-            button1.Location = new Point(658, 366);
-            button1.Name = "button1";
-            button1.Size = new Size(189, 29);
-            button1.TabIndex = 5;
-            button1.Text = "Lägg till podd i samling";
-            button1.UseVisualStyleBackColor = true;
+            label1.AutoSize = true;
+            label1.Location = new Point(1082, 414);
+            label1.Name = "label1";
+            label1.Size = new Size(0, 20);
+            label1.TabIndex = 19;
             // 
-            // lblNamePodcast
+            // tbEditCategoryName
             // 
-            lblNamePodcast.AutoSize = true;
-            lblNamePodcast.Location = new Point(25, 345);
-            lblNamePodcast.Name = "lblNamePodcast";
-            lblNamePodcast.Size = new Size(106, 20);
-            lblNamePodcast.TabIndex = 6;
-            lblNamePodcast.Text = "Namnge podd";
+            tbEditCategoryName.Location = new Point(1084, 384);
+            tbEditCategoryName.Name = "tbEditCategoryName";
+            tbEditCategoryName.Size = new Size(143, 27);
+            tbEditCategoryName.TabIndex = 18;
             // 
-            // textBox1
+            // lblEditCategoryName
             // 
-            textBox1.Location = new Point(25, 368);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 27);
-            textBox1.TabIndex = 7;
-            // 
-            // lblGiveCategoryToPodcast
-            // 
-            lblGiveCategoryToPodcast.AutoSize = true;
-            lblGiveCategoryToPodcast.Location = new Point(197, 345);
-            lblGiveCategoryToPodcast.Name = "lblGiveCategoryToPodcast";
-            lblGiveCategoryToPodcast.Size = new Size(137, 20);
-            lblGiveCategoryToPodcast.TabIndex = 8;
-            lblGiveCategoryToPodcast.Text = "Tilldela en kategori";
-            lblGiveCategoryToPodcast.Click += lblGiveCategoryToPodcast_Click;
-            // 
-            // textBox2
-            // 
-            textBox2.Location = new Point(197, 368);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(153, 27);
-            textBox2.TabIndex = 9;
-            // 
-            // lbMyPodcasts
-            // 
-            lbMyPodcasts.FormattingEnabled = true;
-            lbMyPodcasts.Location = new Point(29, 54);
-            lbMyPodcasts.Name = "lbMyPodcasts";
-            lbMyPodcasts.Size = new Size(257, 224);
-            lbMyPodcasts.TabIndex = 0;
-            // 
-            // lbEpisodesOfAPodcast
-            // 
-            lbEpisodesOfAPodcast.FormattingEnabled = true;
-            lbEpisodesOfAPodcast.Location = new Point(321, 54);
-            lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
-            lbEpisodesOfAPodcast.Size = new Size(258, 224);
-            lbEpisodesOfAPodcast.TabIndex = 1;
-            // 
-            // rbtMoreInformationEpisode
-            // 
-            rbtMoreInformationEpisode.Location = new Point(625, 54);
-            rbtMoreInformationEpisode.Name = "rbtMoreInformationEpisode";
-            rbtMoreInformationEpisode.Size = new Size(245, 224);
-            rbtMoreInformationEpisode.TabIndex = 2;
-            rbtMoreInformationEpisode.Text = "";
-            // 
-            // lblMyPodcasts
-            // 
-            lblMyPodcasts.AutoSize = true;
-            lblMyPodcasts.Location = new Point(29, 23);
-            lblMyPodcasts.Name = "lblMyPodcasts";
-            lblMyPodcasts.Size = new Size(95, 20);
-            lblMyPodcasts.TabIndex = 3;
-            lblMyPodcasts.Text = "Mina poddar";
-            // 
-            // lblEpisodesOfPodcast
-            // 
-            lblEpisodesOfPodcast.AutoSize = true;
-            lblEpisodesOfPodcast.Location = new Point(321, 23);
-            lblEpisodesOfPodcast.Name = "lblEpisodesOfPodcast";
-            lblEpisodesOfPodcast.Size = new Size(112, 20);
-            lblEpisodesOfPodcast.TabIndex = 4;
-            lblEpisodesOfPodcast.Text = "Poddens avsnitt";
-            // 
-            // lblSpecificInformationEpisode
-            // 
-            lblSpecificInformationEpisode.AutoSize = true;
-            lblSpecificInformationEpisode.Location = new Point(625, 23);
-            lblSpecificInformationEpisode.Name = "lblSpecificInformationEpisode";
-            lblSpecificInformationEpisode.Size = new Size(121, 20);
-            lblSpecificInformationEpisode.TabIndex = 5;
-            lblSpecificInformationEpisode.Text = "Mer om avsnittet";
-            // 
-            // btnSort
-            // 
-            btnSort.Location = new Point(130, 19);
-            btnSort.Name = "btnSort";
-            btnSort.Size = new Size(156, 29);
-            btnSort.TabIndex = 6;
-            btnSort.Text = "Sortera kategori A-Ö";
-            btnSort.UseVisualStyleBackColor = true;
-            // 
-            // btnEditName
-            // 
-            btnEditName.Location = new Point(189, 316);
-            btnEditName.Name = "btnEditName";
-            btnEditName.Size = new Size(99, 29);
-            btnEditName.TabIndex = 7;
-            btnEditName.Text = "Spara";
-            btnEditName.UseVisualStyleBackColor = true;
-            // 
-            // btnEditCategory
-            // 
-            btnEditCategory.Location = new Point(189, 383);
-            btnEditCategory.Name = "btnEditCategory";
-            btnEditCategory.Size = new Size(99, 29);
-            btnEditCategory.TabIndex = 8;
-            btnEditCategory.Text = "Spara";
-            btnEditCategory.UseVisualStyleBackColor = true;
-            // 
-            // lbMyCategories
-            // 
-            lbMyCategories.FormattingEnabled = true;
-            lbMyCategories.Location = new Point(1084, 54);
-            lbMyCategories.Name = "lbMyCategories";
-            lbMyCategories.Size = new Size(241, 224);
-            lbMyCategories.TabIndex = 9;
-            // 
-            // lblMyCatgories
-            // 
-            lblMyCatgories.AutoSize = true;
-            lblMyCatgories.Location = new Point(1084, 23);
-            lblMyCatgories.Name = "lblMyCatgories";
-            lblMyCatgories.Size = new Size(114, 20);
-            lblMyCatgories.TabIndex = 10;
-            lblMyCatgories.Text = "Mina kategorier";
-            lblMyCatgories.Click += label1_Click;
-            // 
-            // btnDeleteCategory
-            // 
-            btnDeleteCategory.Location = new Point(1084, 435);
-            btnDeleteCategory.Name = "btnDeleteCategory";
-            btnDeleteCategory.Size = new Size(241, 29);
-            btnDeleteCategory.TabIndex = 11;
-            btnDeleteCategory.Text = "Ta bort kategori";
-            btnDeleteCategory.UseVisualStyleBackColor = true;
-            // 
-            // btnSaveCategory
-            // 
-            btnSaveCategory.Location = new Point(1233, 382);
-            btnSaveCategory.Name = "btnSaveCategory";
-            btnSaveCategory.Size = new Size(92, 29);
-            btnSaveCategory.TabIndex = 12;
-            btnSaveCategory.Text = "Spara";
-            btnSaveCategory.UseVisualStyleBackColor = true;
-            // 
-            // tbEditName
-            // 
-            tbEditName.Location = new Point(29, 318);
-            tbEditName.Name = "tbEditName";
-            tbEditName.Size = new Size(154, 27);
-            tbEditName.TabIndex = 13;
-            // 
-            // lbEditName
-            // 
-            lbEditName.AutoSize = true;
-            lbEditName.Location = new Point(29, 295);
-            lbEditName.Name = "lbEditName";
-            lbEditName.Size = new Size(146, 20);
-            lbEditName.TabIndex = 14;
-            lbEditName.Text = "Redigera poddnamn";
-            // 
-            // textBox3
-            // 
-            textBox3.Location = new Point(29, 383);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(154, 27);
-            textBox3.TabIndex = 15;
+            lblEditCategoryName.AutoSize = true;
+            lblEditCategoryName.Location = new Point(1084, 361);
+            lblEditCategoryName.Name = "lblEditCategoryName";
+            lblEditCategoryName.Size = new Size(170, 20);
+            lblEditCategoryName.TabIndex = 17;
+            lblEditCategoryName.Text = "Redigera katgorinamnet";
             // 
             // lblEditCategory
             // 
@@ -369,73 +301,142 @@
             lblEditCategory.Text = "Redigera poddens kategori";
             lblEditCategory.Click += lblEditCategory_Click;
             // 
-            // lblEditCategoryName
+            // textBox3
             // 
-            lblEditCategoryName.AutoSize = true;
-            lblEditCategoryName.Location = new Point(1084, 361);
-            lblEditCategoryName.Name = "lblEditCategoryName";
-            lblEditCategoryName.Size = new Size(170, 20);
-            lblEditCategoryName.TabIndex = 17;
-            lblEditCategoryName.Text = "Redigera katgorinamnet";
+            textBox3.Location = new Point(29, 383);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(154, 27);
+            textBox3.TabIndex = 15;
             // 
-            // tbEditCategoryName
+            // lbEditName
             // 
-            tbEditCategoryName.Location = new Point(1084, 384);
-            tbEditCategoryName.Name = "tbEditCategoryName";
-            tbEditCategoryName.Size = new Size(143, 27);
-            tbEditCategoryName.TabIndex = 18;
+            lbEditName.AutoSize = true;
+            lbEditName.Location = new Point(29, 295);
+            lbEditName.Name = "lbEditName";
+            lbEditName.Size = new Size(146, 20);
+            lbEditName.TabIndex = 14;
+            lbEditName.Text = "Redigera poddnamn";
             // 
-            // label1
+            // tbEditName
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(1082, 414);
-            label1.Name = "label1";
-            label1.Size = new Size(0, 20);
-            label1.TabIndex = 19;
+            tbEditName.Location = new Point(29, 318);
+            tbEditName.Name = "tbEditName";
+            tbEditName.Size = new Size(154, 27);
+            tbEditName.TabIndex = 13;
             // 
-            // lblCreateCategory
+            // btnSaveCategory
             // 
-            lblCreateCategory.AutoSize = true;
-            lblCreateCategory.Location = new Point(1084, 295);
-            lblCreateCategory.Name = "lblCreateCategory";
-            lblCreateCategory.Size = new Size(128, 20);
-            lblCreateCategory.TabIndex = 20;
-            lblCreateCategory.Text = "Skapa en kategori";
+            btnSaveCategory.Location = new Point(1233, 382);
+            btnSaveCategory.Name = "btnSaveCategory";
+            btnSaveCategory.Size = new Size(92, 29);
+            btnSaveCategory.TabIndex = 12;
+            btnSaveCategory.Text = "Spara";
+            btnSaveCategory.UseVisualStyleBackColor = true;
             // 
-            // tbCreateCategory
+            // btnDeleteCategory
             // 
-            tbCreateCategory.Location = new Point(1084, 318);
-            tbCreateCategory.Name = "tbCreateCategory";
-            tbCreateCategory.Size = new Size(143, 27);
-            tbCreateCategory.TabIndex = 21;
+            btnDeleteCategory.Location = new Point(1084, 435);
+            btnDeleteCategory.Name = "btnDeleteCategory";
+            btnDeleteCategory.Size = new Size(241, 29);
+            btnDeleteCategory.TabIndex = 11;
+            btnDeleteCategory.Text = "Ta bort kategori";
+            btnDeleteCategory.UseVisualStyleBackColor = true;
             // 
-            // btnSaveCreatedCategory
+            // lblMyCatgories
             // 
-            btnSaveCreatedCategory.Location = new Point(1233, 317);
-            btnSaveCreatedCategory.Name = "btnSaveCreatedCategory";
-            btnSaveCreatedCategory.Size = new Size(92, 29);
-            btnSaveCreatedCategory.TabIndex = 22;
-            btnSaveCreatedCategory.Text = "Spara";
-            btnSaveCreatedCategory.UseVisualStyleBackColor = true;
+            lblMyCatgories.AutoSize = true;
+            lblMyCatgories.Location = new Point(1084, 23);
+            lblMyCatgories.Name = "lblMyCatgories";
+            lblMyCatgories.Size = new Size(114, 20);
+            lblMyCatgories.TabIndex = 10;
+            lblMyCatgories.Text = "Mina kategorier";
+            lblMyCatgories.Click += label1_Click;
             // 
-            // btnDeletePodcast
+            // lbMyCategories
             // 
-            btnDeletePodcast.Location = new Point(31, 435);
-            btnDeletePodcast.Name = "btnDeletePodcast";
-            btnDeletePodcast.Size = new Size(257, 29);
-            btnDeletePodcast.TabIndex = 23;
-            btnDeletePodcast.Text = "Ta bort podd";
-            btnDeletePodcast.UseVisualStyleBackColor = true;
+            lbMyCategories.FormattingEnabled = true;
+            lbMyCategories.Location = new Point(1084, 54);
+            lbMyCategories.Name = "lbMyCategories";
+            lbMyCategories.Size = new Size(241, 224);
+            lbMyCategories.TabIndex = 9;
             // 
-            // lblInformation
+            // btnEditCategory
             // 
-            lblInformation.AutoSize = true;
-            lblInformation.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblInformation.Location = new Point(542, 505);
-            lblInformation.Name = "lblInformation";
-            lblInformation.Size = new Size(367, 20);
-            lblInformation.TabIndex = 24;
-            lblInformation.Text = "Markera en rad i en lista för att redigera eller ta bort den";
+            btnEditCategory.Location = new Point(189, 383);
+            btnEditCategory.Name = "btnEditCategory";
+            btnEditCategory.Size = new Size(99, 29);
+            btnEditCategory.TabIndex = 8;
+            btnEditCategory.Text = "Spara";
+            btnEditCategory.UseVisualStyleBackColor = true;
+            // 
+            // btnEditName
+            // 
+            btnEditName.Location = new Point(189, 316);
+            btnEditName.Name = "btnEditName";
+            btnEditName.Size = new Size(99, 29);
+            btnEditName.TabIndex = 7;
+            btnEditName.Text = "Spara";
+            btnEditName.UseVisualStyleBackColor = true;
+            // 
+            // btnSort
+            // 
+            btnSort.Location = new Point(130, 19);
+            btnSort.Name = "btnSort";
+            btnSort.Size = new Size(156, 29);
+            btnSort.TabIndex = 6;
+            btnSort.Text = "Sortera kategori A-Ö";
+            btnSort.UseVisualStyleBackColor = true;
+            // 
+            // lblSpecificInformationEpisode
+            // 
+            lblSpecificInformationEpisode.AutoSize = true;
+            lblSpecificInformationEpisode.Location = new Point(625, 23);
+            lblSpecificInformationEpisode.Name = "lblSpecificInformationEpisode";
+            lblSpecificInformationEpisode.Size = new Size(121, 20);
+            lblSpecificInformationEpisode.TabIndex = 5;
+            lblSpecificInformationEpisode.Text = "Mer om avsnittet";
+            // 
+            // lblEpisodesOfPodcast
+            // 
+            lblEpisodesOfPodcast.AutoSize = true;
+            lblEpisodesOfPodcast.Location = new Point(321, 23);
+            lblEpisodesOfPodcast.Name = "lblEpisodesOfPodcast";
+            lblEpisodesOfPodcast.Size = new Size(112, 20);
+            lblEpisodesOfPodcast.TabIndex = 4;
+            lblEpisodesOfPodcast.Text = "Poddens avsnitt";
+            // 
+            // lblMyPodcasts
+            // 
+            lblMyPodcasts.AutoSize = true;
+            lblMyPodcasts.Location = new Point(29, 23);
+            lblMyPodcasts.Name = "lblMyPodcasts";
+            lblMyPodcasts.Size = new Size(95, 20);
+            lblMyPodcasts.TabIndex = 3;
+            lblMyPodcasts.Text = "Mina poddar";
+            // 
+            // rbtMoreInformationEpisode
+            // 
+            rbtMoreInformationEpisode.Location = new Point(625, 54);
+            rbtMoreInformationEpisode.Name = "rbtMoreInformationEpisode";
+            rbtMoreInformationEpisode.Size = new Size(245, 224);
+            rbtMoreInformationEpisode.TabIndex = 2;
+            rbtMoreInformationEpisode.Text = "";
+            // 
+            // lbEpisodesOfAPodcast
+            // 
+            lbEpisodesOfAPodcast.FormattingEnabled = true;
+            lbEpisodesOfAPodcast.Location = new Point(321, 54);
+            lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
+            lbEpisodesOfAPodcast.Size = new Size(258, 224);
+            lbEpisodesOfAPodcast.TabIndex = 1;
+            // 
+            // lbMyPodcasts
+            // 
+            lbMyPodcasts.FormattingEnabled = true;
+            lbMyPodcasts.Location = new Point(29, 54);
+            lbMyPodcasts.Name = "lbMyPodcasts";
+            lbMyPodcasts.Size = new Size(257, 224);
+            lbMyPodcasts.TabIndex = 0;
             // 
             // Form1
             // 

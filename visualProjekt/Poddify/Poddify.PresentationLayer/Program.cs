@@ -1,4 +1,5 @@
 using Poddify.BusinessLayer;
+using Poddify.DataLayer;
 
 namespace Poddify.PresentationLayer
 {
@@ -12,8 +13,7 @@ namespace Poddify.PresentationLayer
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            
 
             var dbLisa = new DatabaseContext("poddLisa", "poddLisaPassword");
 
@@ -22,6 +22,13 @@ namespace Poddify.PresentationLayer
             var dbMeja = new DatabaseContext("poddMeja", "poddMejaPassword");
 
             var dbIftin = new DatabaseContext("poddIftin", "poddIftinPassword");
+
+            HttpClient http = new HttpClient();
+            var client = new PodcastClient(http);
+            var service = new Service(client);
+
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1(service));
         }
     }
 }
