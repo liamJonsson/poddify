@@ -14,13 +14,11 @@ namespace Poddify.BusinessLayer
         private PodcastClient podcastClient;
         private PodcastRepository podcastRepo;
         private CategoryRepository categoryRepo;
-        private EpisodeRepository episodeRepo;
         public Service(PodcastClient podcastClient)
         {
             this.podcastClient = podcastClient;
             podcastRepo = new PodcastRepository(db);
             categoryRepo = new CategoryRepository(); //db för att å den att fungera
-            episodeRepo = new EpisodeRepository();
         }
 
         //------------------- Rssflöde ------------------//
@@ -137,15 +135,5 @@ namespace Poddify.BusinessLayer
         {
             await categoryRepo.DeleteCategoryAsync(categoryId);
         }
-
-        //------------------- Avsnittsmetoder ------------------//
-
-        //Hämtar ett specifikt avsnitt via id
-
-        public async Task<Episode> GetEpisodeByIdAsync(string id)
-        {
-            return await episodeRepo.GetEpisodeByIdAsync(id);
-        }
-
     }
 }

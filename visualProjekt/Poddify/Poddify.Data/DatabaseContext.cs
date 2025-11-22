@@ -7,7 +7,6 @@ namespace Poddify.DataLayer
     {
         internal readonly IMongoCollection<Podcast> podcastCollection;
         private readonly IMongoCollection<Category> categoryCollection;
-        private readonly IMongoCollection<Episode> episodeCollection;
 
 
         public DatabaseContext()
@@ -17,7 +16,6 @@ namespace Poddify.DataLayer
             var _database = client.GetDatabase("PoddifyDB");
             podcastCollection = _database.GetCollection<Podcast>("Podcasts");
             categoryCollection = _database.GetCollection<Category>("Categories");
-            episodeCollection = _database.GetCollection<Episode>("Episodes");
         }
     }
 }
