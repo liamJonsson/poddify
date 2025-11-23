@@ -83,6 +83,10 @@ namespace Poddify.PresentationLayer
         {
             try
             {
+                if (tbPodcastTitle.Text != "")
+                {
+                    onePodcast.Title = tbPodcastTitle.Text;
+                }
                 await oneService.AddPodcastAsync(onePodcast);
                 MessageBox.Show("Podden sparades!");
             }
