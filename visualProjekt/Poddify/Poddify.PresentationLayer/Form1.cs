@@ -134,9 +134,9 @@ namespace Poddify.PresentationLayer
                 {
                     MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
                 }
-                
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Det gick inte att spara podden");
                 Console.WriteLine(ex.Message);
@@ -144,9 +144,16 @@ namespace Poddify.PresentationLayer
 
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
-
+            try
+            {
+                await LoadAllCategoriesAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fel vid inläsning av kategorier: " + ex.Message);
+            }
         }
 
         private void lblInformation_Click(object sender, EventArgs e)
@@ -156,6 +163,56 @@ namespace Poddify.PresentationLayer
 
         private void label2_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void lbAllEpisodes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Episode selectedEpisode = (Episode)lbAllEpisodes.SelectedItem;
+
+            rbtSpecificEpisode.Text = $"{selectedEpisode.Title} \n {selectedEpisode.Description} \n {selectedEpisode.PublishDate}";
+        }
+
+        private async void btnSaveCreatedCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string newCategory = tbCreateCategory.Text;
+
+                if(string.IsNullOrWhiteSpace(newCategory))
+                {
+                    MessageBox.Show("Kategorinamn får inte vara tomt");
+                    return;
+                }
+
+                bool alreadyExists = await oneService.AddCategoryAsync(newCategory);
+
+                if (alreadyExists)
+                {
+                    MessageBox.Show("Kategorin finns redan i din lista");
+                    return;
+                }
+                await LoadAllCategoriesAsync();
+                MessageBox.Show("Kategorin sparades!");
+                tbCreateCategory.Clear();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("Det gick inte att spara kategorin");
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        private async Task LoadAllCategoriesAsync()
+        {
+            lbMyCategories.Items.Clear();
+            var categories = await oneService.GetAllCategoriesAsync();
+            foreach (Category oneCategory in categories)
+            {
+                lbMyCategories.Items.Add(oneCategory.Name);
+            }
 
         }
     }

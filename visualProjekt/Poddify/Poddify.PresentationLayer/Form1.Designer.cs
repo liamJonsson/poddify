@@ -55,6 +55,7 @@
             tbCreateCategory = new TextBox();
             btnSaveCreatedCategory = new Button();
             mainFrame = new TabPage();
+            label2 = new Label();
             tbCategory = new TextBox();
             tbPodcastTitle = new TextBox();
             rbtSpecificEpisode = new RichTextBox();
@@ -66,7 +67,6 @@
             btnGetPodcast = new Button();
             lblURL = new Label();
             tabControl = new TabControl();
-            label2 = new Label();
             myCollection.SuspendLayout();
             mainFrame.SuspendLayout();
             tabControl.SuspendLayout();
@@ -314,6 +314,7 @@
             btnSaveCreatedCategory.TabIndex = 22;
             btnSaveCreatedCategory.Text = "Spara";
             btnSaveCreatedCategory.UseVisualStyleBackColor = true;
+            btnSaveCreatedCategory.Click += btnSaveCreatedCategory_Click;
             // 
             // mainFrame
             // 
@@ -345,6 +346,17 @@
             mainFrame.Text = "Startsida";
             mainFrame.UseVisualStyleBackColor = true;
             mainFrame.Click += mainFrame_Click;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
+            label2.Location = new Point(1032, 527);
+            label2.Name = "label2";
+            label2.Size = new Size(357, 20);
+            label2.TabIndex = 25;
+            label2.Text = "Markera en rad för att redigera eller ta bort en kategori";
+            label2.Click += label2_Click;
             // 
             // tbCategory
             // 
@@ -412,6 +424,7 @@
             lbAllEpisodes.Name = "lbAllEpisodes";
             lbAllEpisodes.Size = new Size(406, 244);
             lbAllEpisodes.TabIndex = 3;
+            lbAllEpisodes.SelectedIndexChanged += lbAllEpisodes_SelectedIndexChanged;
             // 
             // btnGetPodcast
             // 
@@ -441,17 +454,6 @@
             tabControl.SelectedIndex = 0;
             tabControl.Size = new Size(1405, 583);
             tabControl.TabIndex = 0;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            label2.Location = new Point(1032, 527);
-            label2.Name = "label2";
-            label2.Size = new Size(357, 20);
-            label2.TabIndex = 25;
-            label2.Text = "Markera en rad för att redigera eller ta bort en kategori";
-            label2.Click += label2_Click;
             // 
             // Form1
             // 

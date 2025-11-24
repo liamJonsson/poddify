@@ -93,16 +93,25 @@ namespace Poddify.BusinessLayer
         //------------------- Kategorimetoder ------------------//
 
         //Lägger till en kategori
-        public async Task AddCategoryAsync(string name)
+        public async Task<bool> AddCategoryAsync(string name)
         {
-            var existing = await categoryRepo.GetCategoryByNameAsync(name);
-            if (existing == null)
+            if(string.IsNullOrWhiteSpace(name))
             {
-                await categoryRepo.AddCategoryAsync(name);
+                return true;
             }
             else
             {
-                throw new ArgumentException("Felmeddelande: Kategori finns redan");
+                var existing = await categoryRepo.GetCategoryByNameAsync(name);
+
+                if(existing != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    await categoryRepo.AddCategoryAsync(name);
+                    return false;
+                }
             }
         }
 
