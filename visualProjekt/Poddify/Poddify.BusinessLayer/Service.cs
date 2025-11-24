@@ -113,7 +113,7 @@ namespace Poddify.BusinessLayer
         }
 
         //Hämtar en specifik kategori via namn
-        public async Task<Category> GetCategoryByNameAsync(string name)
+        public async Task<Category?> GetCategoryByNameAsync(string name)
         {
             return await categoryRepo.GetCategoryByNameAsync(name);
         }

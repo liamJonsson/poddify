@@ -28,7 +28,7 @@ namespace Poddify.DataLayer
         }
 
         //Hämtar en specifik kategori via namn
-        public async Task<Category> GetCategoryByNameAsync(string name)
+        public async Task<Category?> GetCategoryByNameAsync(string name)
         {
             var filter = Builders<Category>.Filter.Eq(c => c.Name, name);
             return await categoryCollection.Find(filter).FirstOrDefaultAsync();
