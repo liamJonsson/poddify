@@ -102,7 +102,6 @@ namespace Poddify.PresentationLayer
 
                 if (tbCategory.Text != "")
                 {
-                    MessageBox.Show("IF kördes!");
                     try
                     {
                         var existingCategory = await oneService.GetCategoryByNameAsync(tbCategory.Text);
@@ -111,11 +110,18 @@ namespace Poddify.PresentationLayer
                         if (existingCategory != null)
                         {
                             onePodcast.CategoryId = existingCategory.Id;
+                            await oneService.AddPodcastAsync(onePodcast);
+                            MessageBox.Show("Podden sparades!");
+                            tbURL.Clear();
+                            lbAllEpisodes.Items.Clear();
+                            tbPodcastTitle.Clear();
+                            tbCategory.Clear();
+                            rbtSpecificEpisode.Clear();
                         }
 
                         else
                         {
-                            MessageBox.Show("Kategorin kunde ej tilldelas då den inte finns i din lista");
+                            MessageBox.Show("Podden kunde inte sparas eftersom kategorin inte finns i din lista och kunde inte tilldelas");
                         }
                     }
                     catch (Exception ex)
@@ -124,15 +130,11 @@ namespace Poddify.PresentationLayer
                         MessageBox.Show("Fel i kategorikontrollen: " + ex);
                     }
                 }
-                await oneService.AddPodcastAsync(onePodcast);
-                MessageBox.Show("Podden sparades!");
-
-                tbURL.Clear();
-                lbAllEpisodes.Items.Clear();
-                tbPodcastTitle.Clear();
-                tbCategory.Clear();
-                rbtSpecificEpisode.Clear();
-
+                else
+                {
+                    MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
+                }
+                
             }
             catch(Exception ex)
             {

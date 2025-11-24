@@ -18,7 +18,7 @@ namespace Poddify.BusinessLayer
         {
             this.podcastClient = podcastClient;
             podcastRepo = new PodcastRepository(db);
-            categoryRepo = new CategoryRepository(); //db för att å den att fungera
+            categoryRepo = new CategoryRepository(db); //db för att å den att fungera
         }
 
         //------------------- Rssflöde ------------------//

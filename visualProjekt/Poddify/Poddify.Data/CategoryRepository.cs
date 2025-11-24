@@ -13,6 +13,11 @@ namespace Poddify.DataLayer
     {
         private readonly IMongoCollection<Category> categoryCollection;
 
+        public CategoryRepository(DatabaseContext db)
+        {
+            categoryCollection = db.categoryCollection;
+        }
+
         //Skapar en ny kategori och lägger in den i en kollektion i databasen
         public async Task AddCategoryAsync(string name)
         {

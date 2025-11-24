@@ -6,7 +6,7 @@ namespace Poddify.DataLayer
     public class DatabaseContext
     {
         internal readonly IMongoCollection<Podcast> podcastCollection;
-        private readonly IMongoCollection<Category> categoryCollection;
+        internal readonly IMongoCollection<Category> categoryCollection;
 
 
         public DatabaseContext()
