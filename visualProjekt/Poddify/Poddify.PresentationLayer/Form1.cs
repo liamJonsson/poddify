@@ -18,7 +18,7 @@ namespace Poddify.PresentationLayer
         public Form1()
         {
             InitializeComponent();
-          
+
             oneClient = new PodcastClient(new HttpClient());
             oneService = new Service(oneClient);
             onePodcast = new Podcast();
@@ -62,18 +62,24 @@ namespace Poddify.PresentationLayer
 
 
         //----------------------------------------Börjar härifrån-----------------------------------//
+
+        //Startsida
+
+        //RssUrl + mina kategorier
+
+        //Hämtar podcast via URL
         private async void btnGetPodcast_Click(object sender, EventArgs e)
         {
             try
             {
+                lbAllEpisodes.Items.Clear();
+                rbtSpecificEpisode.Clear();
+
                 onePodcast = await oneClient.GetPodcast(tbURL.Text);
                 onePodcast.RssUrl = tbURL.Text;
                 onePodcast.Id = ObjectId.GenerateNewId().ToString();
 
                 allEpisodes = await oneService.GetAllEpisodes(onePodcast);
-
-                lbAllEpisodes.Items.Clear();
-                rbtSpecificEpisode.Clear();
 
                 foreach (Episode oneEpisode in allEpisodes)
                 {
@@ -89,11 +95,10 @@ namespace Poddify.PresentationLayer
             {
                 MessageBox.Show("Din sökväg gav ingen träff");
                 Console.WriteLine(ex.Message);
-
-
             }
         }
 
+        //Sparar podcasten till min samling om kategorin finns och är giltig
         private async void btnSavePodcast_Click(object sender, EventArgs e)
         {
             try
@@ -108,13 +113,13 @@ namespace Poddify.PresentationLayer
                     try
                     {
                         var existingCategory = await oneService.GetCategoryByNameAsync(tbCategory.Text);
-                        Console.WriteLine(existingCategory);
 
                         if (existingCategory != null)
                         {
                             onePodcast.CategoryId = existingCategory.Id;
                             await oneService.AddPodcastAsync(onePodcast);
                             MessageBox.Show("Podden sparades!");
+
                             tbURL.Clear();
                             lbAllEpisodes.Items.Clear();
                             tbPodcastTitle.Clear();
@@ -129,8 +134,8 @@ namespace Poddify.PresentationLayer
                     }
                     catch (Exception ex)
                     {
+                        MessageBox.Show("Ett fel har inträffat");
                         Console.WriteLine(ex.Message);
-                        MessageBox.Show("Fel i kategorikontrollen: " + ex);
                     }
                 }
                 else
@@ -147,6 +152,7 @@ namespace Poddify.PresentationLayer
             }
         }
 
+        //Fyller kategorilistan när sidan laddas
         private async void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -169,35 +175,47 @@ namespace Poddify.PresentationLayer
 
         }
 
+        //Visar information om det valda avsnittet
         private void lbAllEpisodes_SelectedIndexChanged(object sender, EventArgs e)
         {
             Episode selectedEpisode = (Episode)lbAllEpisodes.SelectedItem;
 
-            rbtSpecificEpisode.Text = $"{selectedEpisode.Title} \n {selectedEpisode.Description} \n {selectedEpisode.PublishDate}";
+            string cleanDescription = StripHtml(selectedEpisode.Description);
+
+            rbtSpecificEpisode.Text = $"{selectedEpisode.PublishDate} \n \n {selectedEpisode.Title} \n \n {cleanDescription} \n \n {selectedEpisode.Link} ";
         }
 
+        //Skapar en ny kategori
         private async void btnSaveCreatedCategory_Click(object sender, EventArgs e)
         {
             try
             {
-                string newCategory = tbCreateCategory.Text;
+                string newCategoryName = tbCreateCategory.Text;
 
-                if(string.IsNullOrWhiteSpace(newCategory))
+                if (string.IsNullOrWhiteSpace(newCategoryName))
                 {
                     MessageBox.Show("Kategorinamn får inte vara tomt");
                     return;
                 }
 
-                bool alreadyExists = await oneService.AddCategoryAsync(newCategory);
+                //Returnerar false och lägger till kategorin om den inte redan finns
+
+                bool alreadyExists = await oneService.AddCategoryAsync(newCategoryName);
 
                 if (alreadyExists)
                 {
                     MessageBox.Show("Kategorin finns redan i din lista");
                     return;
                 }
-                await LoadAllCategoriesAsync();
-                MessageBox.Show("Kategorin sparades!");
-                tbCreateCategory.Clear();
+
+                else
+                {                   
+                    await LoadAllCategoriesAsync();
+
+                    tbCreateCategory.Clear();
+
+                    MessageBox.Show("Kategorin sparades!");
+                }
             }
 
             catch (Exception ex)
@@ -205,9 +223,9 @@ namespace Poddify.PresentationLayer
                 MessageBox.Show("Det gick inte att spara kategorin");
                 Console.WriteLine(ex.Message);
             }
-
         }
 
+        //Hämtar och visar kategorier i listan
         private async Task LoadAllCategoriesAsync()
         {
             lbMyCategories.Items.Clear();
@@ -381,6 +399,49 @@ namespace Poddify.PresentationLayer
             {
                 MessageBox.Show("Något gick fel när podden skulle tas bort");
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        //Redigera namn på vald kategori
+        private async void btnSaveCategory_Click(object sender, EventArgs e)
+        {
+            string selectedCategory = (string)lbMyCategories.SelectedItem;
+
+            Category oneCategory = await oneService.GetCategoryByNameAsync(selectedCategory);
+
+            if (oneCategory != null)
+            {
+                string updatedCategoryName = tbEditCategoryName.Text;
+
+                if (!string.IsNullOrWhiteSpace(updatedCategoryName) && !updatedCategoryName.Equals(oneCategory.Name))
+                {
+                    try
+                    {
+                        bool updated = await oneService.UpdateCategoryNameAsync(oneCategory.Id, updatedCategoryName);
+
+                        if (updated)
+                        {
+                            await LoadAllCategoriesAsync();
+
+                            tbEditCategoryName.Clear();
+
+                            MessageBox.Show("Kategorinamnet har uppdaterats!");                        
+                        }
+                        else
+                        {
+                            MessageBox.Show("En annan kategori har redan detta namn. Välj ett nytt!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Kunde inte uppdatera kategorinamnet");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vänligen ange ett giltigt kategorinamn");
+                }
             }
         }
     }

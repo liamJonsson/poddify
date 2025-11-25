@@ -278,6 +278,7 @@
             btnSaveCategory.TabIndex = 12;
             btnSaveCategory.Text = "Spara";
             btnSaveCategory.UseVisualStyleBackColor = true;
+            btnSaveCategory.Click += btnSaveCategory_Click;
             // 
             // lblEditCategoryName
             // 

@@ -136,7 +136,17 @@ namespace Poddify.BusinessLayer
         //Uppdaterar namnet på en kategori
         public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName)
         {
-            return await categoryRepo.UpdateCategoryNameAsync(categoryId, newName);
+            var existing = await categoryRepo.GetCategoryByNameAsync(newName);
+
+            if (existing == null)
+            {
+                await categoryRepo.UpdateCategoryNameAsync(categoryId, newName);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         //Raderar en kategori
