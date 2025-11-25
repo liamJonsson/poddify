@@ -327,6 +327,7 @@ namespace Poddify.PresentationLayer
                
                     LoadAllCategoriesAsync();
 
+                    btnSaveCreatedCategory.Enabled = false;
                     btnSaveCategory.Enabled = false;
                     btnDeleteCategory.Enabled = false;
 
