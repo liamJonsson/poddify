@@ -18,8 +18,7 @@ namespace Poddify.PresentationLayer
         public Form1()
         {
             InitializeComponent();
-            showAllPodcasts();
-
+          
             oneClient = new PodcastClient(new HttpClient());
             oneService = new Service(oneClient);
             onePodcast = new Podcast();
@@ -27,6 +26,8 @@ namespace Poddify.PresentationLayer
             btnDeletePodcast.Enabled = false;
             tbPodcastTitle.Enabled = false;
             tbCategory.Enabled = false;
+
+            showAllPodcasts();
         }
 
         private void mainFrame_Click(object sender, EventArgs e)
