@@ -137,7 +137,7 @@ namespace Poddify.PresentationLayer
                 {
                     MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
                 }
-                showAllPodcasts();
+                clearAllFields();
 
             }
             catch (Exception ex)
