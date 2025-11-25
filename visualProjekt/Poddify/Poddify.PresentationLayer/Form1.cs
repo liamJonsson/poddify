@@ -92,8 +92,6 @@ namespace Poddify.PresentationLayer
 
 
             }
-
-
         }
 
         private async void btnSavePodcast_Click(object sender, EventArgs e)
@@ -139,6 +137,7 @@ namespace Poddify.PresentationLayer
                 {
                     MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
                 }
+                showAllPodcasts();
 
             }
             catch (Exception ex)
@@ -146,7 +145,6 @@ namespace Poddify.PresentationLayer
                 MessageBox.Show("Det gick inte att spara podden");
                 Console.WriteLine(ex.Message);
             }
-
         }
 
         private async void Form1_Load(object sender, EventArgs e)
