@@ -32,10 +32,10 @@ namespace Poddify.DataLayer
             return await podcastCollection.Find(FilterDefinition<Podcast>.Empty).ToListAsync();
         }
 
-        //Hämtar en specifik podcast
-        public async Task<Podcast?> GetPodcastByIdAsync(string id)
+        //Hämtar en specifik podcast via rss-url
+        public async Task<Podcast?> GetPodcastByRssUrlAsync(string rssUrl)
         {
-            var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
+            var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();
         }
 

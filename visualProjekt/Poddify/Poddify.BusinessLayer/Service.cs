@@ -44,7 +44,10 @@ namespace Poddify.BusinessLayer
         //Lägger till en podcast i min samling
         public async Task AddPodcastAsync(Podcast onePodcast)
         {
-            var existing = await podcastRepo.GetPodcastByIdAsync(onePodcast.Id);
+            /*Podcast existing = await podcastRepo.GetPodcastByIdAsync(onePodcast.Id);*/
+
+            Podcast existing = await podcastRepo.GetPodcastByRssUrlAsync(onePodcast.RssUrl);
+
             if (existing == null)
             {
                 await podcastRepo.AddPodcastAsync(onePodcast);
@@ -61,10 +64,9 @@ namespace Poddify.BusinessLayer
             return await podcastRepo.GetAllPodcastsAsync();
         }
 
-        //Hämtar en specifik podcast via id
-        public async Task<Podcast?> GetPodcastByIdAsync(string id)
+        public async Task<Podcast?> GetPodcastByRssUrlAsync(string rssUrl)
         {
-            return await podcastRepo.GetPodcastByIdAsync(id);
+            return await podcastRepo.GetPodcastByRssUrlAsync(rssUrl);
         }
 
         //Uppdaterar namnet på en podcast

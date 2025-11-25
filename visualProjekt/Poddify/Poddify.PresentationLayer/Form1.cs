@@ -120,14 +120,23 @@ namespace Poddify.PresentationLayer
                         if (existingCategory != null)
                         {
                             onePodcast.CategoryId = existingCategory.Id;
-                            await oneService.AddPodcastAsync(onePodcast);
-                            MessageBox.Show("Podden sparades!");
 
-                            tbURL.Clear();
-                            lbAllEpisodes.Items.Clear();
-                            tbPodcastTitle.Clear();
-                            tbCategory.Clear();
-                            rbtSpecificEpisode.Clear();
+                            if (await oneService.GetPodcastByRssUrlAsync(tbURL.Text) == null)
+                            {
+                                await oneService.AddPodcastAsync(onePodcast);
+
+                                tbURL.Clear();
+                                lbAllEpisodes.Items.Clear();
+                                tbPodcastTitle.Clear();
+                                tbCategory.Clear();
+                                rbtSpecificEpisode.Clear();
+
+                                MessageBox.Show("Podden sparades!");
+                            }
+                            else
+                            {
+                                MessageBox.Show("Det går inte att lägga till podden då den redan finns i din samling");
+                            }
                         }
 
                         else
@@ -424,10 +433,7 @@ namespace Poddify.PresentationLayer
                         bool updated = await oneService.UpdateCategoryNameAsync(oneCategory.Id, updatedCategoryName);
 
                         if (updated)
-                        {
-
-                            
-
+                        {                        
                             await LoadAllCategoriesAsync();
 
                             tbEditCategoryName.Clear();
