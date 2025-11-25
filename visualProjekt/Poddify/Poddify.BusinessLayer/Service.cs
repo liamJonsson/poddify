@@ -70,7 +70,7 @@ namespace Poddify.BusinessLayer
         //Uppdaterar namnet på en podcast
         public async Task<bool> UpdateNameAsync(string id, string newTitle)
         {
-            return await UpdateNameAsync(id, newTitle);
+            return await podcastRepo.UpdateNameAsync(id, newTitle);
         }
 
         //Uppdaterar kategorin för en podcast

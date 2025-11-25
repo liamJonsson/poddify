@@ -118,6 +118,7 @@
             btnDeletePodcast.TabIndex = 23;
             btnDeletePodcast.Text = "Ta bort podd";
             btnDeletePodcast.UseVisualStyleBackColor = true;
+            btnDeletePodcast.Click += btnDeletePodcast_Click;
             // 
             // textBox3
             // 
@@ -176,6 +177,7 @@
             btnEditCategory.TabIndex = 8;
             btnEditCategory.Text = "Spara";
             btnEditCategory.UseVisualStyleBackColor = true;
+            btnEditCategory.Click += btnEditCategory_Click;
             // 
             // btnEditName
             // 
@@ -185,6 +187,7 @@
             btnEditName.TabIndex = 7;
             btnEditName.Text = "Spara";
             btnEditName.UseVisualStyleBackColor = true;
+            btnEditName.Click += btnEditName_Click;
             // 
             // btnSort
             // 
@@ -229,6 +232,7 @@
             lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
             lbEpisodesOfAPodcast.Size = new Size(258, 224);
             lbEpisodesOfAPodcast.TabIndex = 1;
+            lbEpisodesOfAPodcast.SelectedIndexChanged += lbEpisodesOfAPodcast_SelectedIndexChanged;
             // 
             // lbMyPodcasts
             // 
@@ -237,6 +241,7 @@
             lbMyPodcasts.Name = "lbMyPodcasts";
             lbMyPodcasts.Size = new Size(257, 224);
             lbMyPodcasts.TabIndex = 0;
+            lbMyPodcasts.SelectedIndexChanged += lbMyPodcasts_SelectedIndexChanged;
             // 
             // lbMyCategories
             // 
