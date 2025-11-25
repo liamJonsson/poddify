@@ -12,6 +12,8 @@ namespace Poddify.PresentationLayer
     {
         private Service oneService;
         private List<Episode> allEpisodes;
+        private List<Podcast> allPodcasts;
+        private List<Category> allCategories; 
         private PodcastClient oneClient;
         private Podcast onePodcast;
 
@@ -206,6 +208,7 @@ namespace Poddify.PresentationLayer
 
                 if (string.IsNullOrWhiteSpace(newCategoryName))
                 {
+                    btnSaveCreatedCategory.Enabled = false;
                     MessageBox.Show("Kategorinamn får inte vara tomt");
                     return;
                 }
@@ -216,6 +219,7 @@ namespace Poddify.PresentationLayer
 
                 if (alreadyExists)
                 {
+                    btnSaveCreatedCategory.Enabled = false;
                     MessageBox.Show("Kategorin finns redan i din lista");
                     return;
                 }
@@ -234,6 +238,7 @@ namespace Poddify.PresentationLayer
 
             catch (Exception ex)
             {
+                btnSaveCreatedCategory.Enabled = false;
                 MessageBox.Show("Det gick inte att spara kategorin");
                 Console.WriteLine(ex.Message);
             }
@@ -247,172 +252,6 @@ namespace Poddify.PresentationLayer
             foreach (Category oneCategory in categories)
             {
                 lbMyCategories.Items.Add(oneCategory.Name);
-            }
-        }
-
-        //---------------------------------------Mina poddar-------------------------------------//
-
-        //Visar alla podcasts i min samling
-        private async void showAllPodcasts()
-        {
-            List<Podcast> allPodcasts = await oneService.GetAllPodcastsAsync();
-
-            foreach (Podcast onePodcast in allPodcasts)
-            {
-                lbMyPodcasts.Items.Add(onePodcast);
-            }
-            lbMyPodcasts.DisplayMember = "Title";
-        }
-
-        // Ta bort HTML-taggar från en sträng
-        private string StripHtml(string input)
-        {
-            input = input.Split("<hr")[0];
-            return Regex.Replace(input, "<.*?>", "").Trim();
-        }
-
-        //Rensar listor och textboxar
-        private void clearAllFields()
-        {
-            lbMyPodcasts.Items.Clear();
-            lbEpisodesOfAPodcast.Items.Clear();
-            rbtMoreInformationEpisode.Clear();
-            tbEditName.Clear();
-            tbEditCategoryName.Clear();
-            showAllPodcasts();
-        }
-
-        //Visar alla avsnitt för den valda podden i min samling
-        private async void lbMyPodcasts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                Podcast selectedPodcast = (Podcast)lbMyPodcasts.SelectedItem;
-
-                allEpisodes = await oneService.GetAllEpisodes(selectedPodcast);
-
-                rbtMoreInformationEpisode.Clear();
-                lbEpisodesOfAPodcast.Items.Clear();
-
-                foreach (Episode oneEpisode in allEpisodes)
-                {
-                    lbEpisodesOfAPodcast.Items.Add(oneEpisode);
-                }
-
-                lbEpisodesOfAPodcast.DisplayMember = "Title";
-                btnDeletePodcast.Enabled = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Något gick fel när poddens avsnitt skulle visas");
-                Console.WriteLine(ex.Message);
-            }
-        }
-
-        //Visar mer information om det valda avsnittet
-        private async void lbEpisodesOfAPodcast_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Episode selectedEpisode = (Episode)lbEpisodesOfAPodcast.SelectedItem;
-
-            string cleanDescription = StripHtml(selectedEpisode.Description);
-
-            rbtMoreInformationEpisode.Text =
-            $"{selectedEpisode.PublishDate} \n \n {selectedEpisode.Title} \n \n {cleanDescription} \n {selectedEpisode.Link}";
-        }
-
-        //Redigera namn på vald podd
-        private async void btnEditName_Click(object sender, EventArgs e)
-        {
-            Podcast selectedPodcast = (Podcast)lbMyPodcasts.SelectedItem;
-
-            if (selectedPodcast != null)
-            {
-                if (!tbEditName.Text.Equals(selectedPodcast.Title) && !string.IsNullOrWhiteSpace(tbEditName.Text))
-                {
-                    try
-                    {
-                        bool updated = await oneService.UpdateNameAsync(selectedPodcast.Id, tbEditName.Text);
-
-                        if (updated)
-                        {
-                            clearAllFields();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Tyvärr så uppdaterades inte namnet. Försök igen!");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Något gick fel när poddens namn skulle redigeras");
-                        Console.WriteLine(ex.Message);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Vänligen ange ett nytt namn");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Vänligen välj en podd att redigera");
-            }
-        }
-
-        //Redigera kategori på vald podd
-        private async void btnEditCategory_Click(object sender, EventArgs e)
-        {
-            Podcast selectedPodcast = (Podcast)lbMyPodcasts.SelectedItem;
-
-            if (tbEditCategoryName.Text != "" && tbEditCategoryName.Text != selectedPodcast.CategoryId)
-            {
-                try
-                {
-                    bool updated = await oneService.UpdateCategoryAsync(selectedPodcast.Id, tbEditCategoryName.Text);
-
-                    if (updated)
-                    {
-                        clearAllFields();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Tyvärr så uppdaterades inte kategorin. Försök igen!");
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Något gick fel när poddens kategori skulle redigeras");
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Vänligen ange en ny kategori");
-            }
-        }
-
-        //Raderar vald podd
-        private async void btnDeletePodcast_Click(object sender, EventArgs e)
-        {
-            var result = MessageBox.Show(
-            "Vill du ta bort podden?",       // text
-            "Bekräfta borttagning",          // titel
-            MessageBoxButtons.YesNo,         // knappar
-            MessageBoxIcon.Hand);            // ikon (valfritt)
-
-            try
-            {
-                if (result == DialogResult.Yes)
-                {
-                    Podcast selectedPodcast = (Podcast)lbMyPodcasts.SelectedItem;
-                    await oneService.DeletePodcastAsync(selectedPodcast.Id);
-                }
-                clearAllFields();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Något gick fel när podden skulle tas bort");
-                Console.WriteLine(ex.Message);
             }
         }
 
@@ -438,6 +277,7 @@ namespace Poddify.PresentationLayer
 
                             tbEditCategoryName.Clear();
 
+                            btnSaveCreatedCategory.Enabled = false;
                             btnSaveCategory.Enabled = false;
                             btnDeleteCategory.Enabled = false;
 
@@ -511,6 +351,303 @@ namespace Poddify.PresentationLayer
         private void tbCreateCategory_TextChanged(object sender, EventArgs e)
         {
             btnSaveCreatedCategory.Enabled = true;
+        }
+
+        //---------------------------------------Mina poddar-------------------------------------//
+
+        //Visar alla podcasts i min samling
+        private async void showAllPodcasts()
+        {
+            allPodcasts = await oneService.GetAllPodcastsAsync();
+            allCategories = await oneService.GetAllCategoriesAsync();
+
+            foreach (Podcast onePodcast in allPodcasts)
+            {
+                string categoryId = onePodcast.CategoryId;
+                string categoryName = "?";
+
+                foreach (Category oneCategory in allCategories)
+                {
+                    if (oneCategory.Id == categoryId)
+                    {
+                        categoryName = oneCategory.Name;
+                        break;
+                    }
+                }
+
+                lbMyPodcasts.Items.Add($"{onePodcast.Title} - {categoryName}");
+            }
+
+        }
+
+        // Ta bort HTML-taggar från en sträng
+        private string StripHtml(string input)
+        {
+            input = input.Split("<hr")[0];
+            return Regex.Replace(input, "<.*?>", "").Trim();
+        }
+
+        //Rensar listor och textboxar
+        private void clearAllFields()
+        {
+            lbMyPodcasts.Items.Clear();
+            lbEpisodesOfAPodcast.Items.Clear();
+            rbtMoreInformationEpisode.Clear();
+            tbEditName.Clear();
+            tbEditPodcastCategory.Clear();
+        }
+
+        //Visar alla avsnitt för den valda podden i min samling
+        private async void lbMyPodcasts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int idx = lbMyPodcasts.SelectedIndex;
+
+                // Om inget är valt — städa upp och avaktivera knappar
+                if (idx < 0 || allPodcasts == null || idx >= allPodcasts.Count)
+                {
+                    rbtMoreInformationEpisode.Clear();
+                    lbEpisodesOfAPodcast.Items.Clear();
+                    btnDeletePodcast.Enabled = false;
+                    return;
+                }
+
+                Podcast selectedPodcast = allPodcasts[idx];
+
+                allEpisodes = await oneService.GetAllEpisodes(selectedPodcast);
+
+                rbtMoreInformationEpisode.Clear();
+                lbEpisodesOfAPodcast.Items.Clear();
+
+                foreach (Episode oneEpisode in allEpisodes)
+                {
+                    lbEpisodesOfAPodcast.Items.Add(oneEpisode);
+                }
+
+                lbEpisodesOfAPodcast.DisplayMember = "Title";
+                btnDeletePodcast.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när poddens avsnitt skulle visas");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        //Visar mer information om det valda avsnittet
+        private async void lbEpisodesOfAPodcast_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Episode selectedEpisode = (Episode)lbEpisodesOfAPodcast.SelectedItem;
+
+            string cleanDescription = StripHtml(selectedEpisode.Description);
+
+            rbtMoreInformationEpisode.Text =
+            $"{selectedEpisode.PublishDate} \n \n {selectedEpisode.Title} \n \n {cleanDescription} \n {selectedEpisode.Link}";
+        }
+
+        //Redigera namn på vald podd
+        private async void btnEditName_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                allPodcasts = await oneService.GetAllPodcastsAsync();
+
+                foreach (Podcast onePodcast in allPodcasts)
+                {
+                    if (onePodcast.Title.Equals(tbEditName.Text))
+                    {
+                        MessageBox.Show("En podd med detta namn finns redan i din samling. Vänligen välj ett annat namn.");
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när poddens namn skulle redigeras");
+                Console.WriteLine(ex.Message);
+            }
+
+            int idx = lbMyPodcasts.SelectedIndex;
+
+            // Om inget är valt — städa upp och avaktivera knappar
+            if (idx < 0 || allPodcasts == null || idx >= allPodcasts.Count)
+            {
+                rbtMoreInformationEpisode.Clear();
+                lbEpisodesOfAPodcast.Items.Clear();
+                btnDeletePodcast.Enabled = false;
+                return;
+            }
+
+            Podcast selectedPodcast = allPodcasts[idx];
+
+            if (selectedPodcast != null)
+            {
+                if (!tbEditName.Text.Equals(selectedPodcast.Title) && !string.IsNullOrWhiteSpace(tbEditName.Text))
+                {
+                    try
+                    {
+                        bool updated = await oneService.UpdateNameAsync(selectedPodcast.Id, tbEditName.Text);
+
+                        if (updated)
+                        {
+                            clearAllFields();
+                            showAllPodcasts();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tyvärr så uppdaterades inte namnet. Försök igen!");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Något gick fel när poddens namn skulle redigeras");
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Vänligen ange ett nytt namn");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vänligen välj en podd att redigera");
+            }
+        }
+
+        //Redigera kategori på vald podd
+        private async void btnEditCategory_Click(object sender, EventArgs e)
+        {
+            int idx = lbMyPodcasts.SelectedIndex;
+
+            // Om inget är valt — städa upp och avaktivera knappar
+            if (idx < 0 || allPodcasts == null || idx >= allPodcasts.Count)
+            {
+                rbtMoreInformationEpisode.Clear();
+                lbEpisodesOfAPodcast.Items.Clear();
+                btnDeletePodcast.Enabled = false;
+                return;
+            }
+
+            Podcast selectedPodcast = allPodcasts[idx];
+
+            string selectedPodcastId = selectedPodcast.Id;
+
+            Category currentCategory = await oneService.GetCategoryByIdAsync(selectedPodcast.CategoryId);
+            string currentCategoryName = "?";
+
+            if (currentCategory != null)
+            {
+                currentCategoryName = currentCategory.Name;
+            }
+
+            Category newCategory = await oneService.GetCategoryByNameAsync(tbEditPodcastCategory.Text);
+
+            if (selectedPodcast != null)
+            {
+                if (newCategory != null)
+                {
+                    string newCategoryId = newCategory.Id;
+                    string newCategoryName = newCategory.Name;
+
+                    if (!currentCategoryName.Equals(newCategoryName) && !string.IsNullOrWhiteSpace(tbEditPodcastCategory.Text))
+                    {
+                        try
+                        {
+                            bool updated = await oneService.UpdateCategoryAsync(selectedPodcastId, newCategoryId);
+
+                            if (updated)
+                            {
+                                clearAllFields();
+                                showAllPodcasts();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Tyvärr så uppdaterades inte kategorin!");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Något gick fel när poddens kategori skulle redigeras");
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Du måste välja en ny kategori!");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Det finns ingen kategori med detta namn!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vänligen välj en podd att redigera");
+            }
+        }
+
+        //Raderar vald podd
+        private async void btnDeletePodcast_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+            "Vill du ta bort podden?",       // text
+            "Bekräfta borttagning",          // titel
+            MessageBoxButtons.YesNo,         // knappar
+            MessageBoxIcon.Hand);            // ikon (valfritt)
+
+            try
+            {
+                if (result == DialogResult.Yes)
+                {
+                    int idx = lbMyPodcasts.SelectedIndex;
+
+                    // Om inget är valt — städa upp och avaktivera knappar
+                    if (idx < 0 || allPodcasts == null || idx >= allPodcasts.Count)
+                    {
+                        rbtMoreInformationEpisode.Clear();
+                        lbEpisodesOfAPodcast.Items.Clear();
+                        btnDeletePodcast.Enabled = false;
+                        return;
+                    }
+
+                    Podcast selectedPodcast = allPodcasts[idx];
+                    await oneService.DeletePodcastAsync(selectedPodcast.Id);
+                }
+                clearAllFields();
+                showAllPodcasts();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när podden skulle tas bort");
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private async void btnSort_Click(object sender, EventArgs e)
+        {
+            clearAllFields();
+            List<Podcast> sortedPodcasts = await oneService.GetPodcastsSortedByCategoryNameAsync();
+
+            foreach (Podcast oneSortedPodcast in sortedPodcasts)
+            {
+                string categoryId = oneSortedPodcast.CategoryId;
+                string categoryName = "?";
+
+                foreach (Category oneCategory in allCategories)
+                {
+                    if (oneCategory.Id == categoryId)
+                    {
+                        categoryName = oneCategory.Name;
+                        break;
+                    }
+                }
+
+                lbMyPodcasts.Items.Add($"{oneSortedPodcast.Title} - {categoryName}");
+            }
         }
     }
 }

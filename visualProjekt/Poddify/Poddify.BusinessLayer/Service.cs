@@ -156,5 +156,15 @@ namespace Poddify.BusinessLayer
         {
             await categoryRepo.DeleteCategoryAsync(categoryId);
         }
+
+     //---------------- För sortering av podcasts ----------------//
+
+        //Hämtar alla podcasts sorterade efter kategorinamn
+        public async Task<List<Podcast>> GetPodcastsSortedByCategoryNameAsync()
+        {
+            var podcasts = await podcastRepo.GetAllPodcastsAsync();
+            var categories = await categoryRepo.GetAllCategoriesAsync();
+            return podcasts.OrderBy(p => categories.FirstOrDefault(c => c.Id == p.CategoryId)?.Name ?? "").ToList();
+        }
     }
 }

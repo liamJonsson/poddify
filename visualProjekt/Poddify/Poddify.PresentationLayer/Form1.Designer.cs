@@ -31,7 +31,7 @@
             myCollection = new TabPage();
             lblInformation = new Label();
             btnDeletePodcast = new Button();
-            textBox3 = new TextBox();
+            tbEditPodcastCategory = new TextBox();
             tbEditName = new TextBox();
             rbtMoreInformationEpisode = new RichTextBox();
             label1 = new Label();
@@ -76,7 +76,7 @@
             // 
             myCollection.Controls.Add(lblInformation);
             myCollection.Controls.Add(btnDeletePodcast);
-            myCollection.Controls.Add(textBox3);
+            myCollection.Controls.Add(tbEditPodcastCategory);
             myCollection.Controls.Add(tbEditName);
             myCollection.Controls.Add(rbtMoreInformationEpisode);
             myCollection.Controls.Add(label1);
@@ -120,12 +120,12 @@
             btnDeletePodcast.UseVisualStyleBackColor = true;
             btnDeletePodcast.Click += btnDeletePodcast_Click;
             // 
-            // textBox3
+            // tbEditPodcastCategory
             // 
-            textBox3.Location = new Point(271, 392);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(154, 27);
-            textBox3.TabIndex = 15;
+            tbEditPodcastCategory.Location = new Point(271, 392);
+            tbEditPodcastCategory.Name = "tbEditPodcastCategory";
+            tbEditPodcastCategory.Size = new Size(154, 27);
+            tbEditPodcastCategory.TabIndex = 15;
             // 
             // tbEditName
             // 
@@ -197,6 +197,7 @@
             btnSort.TabIndex = 6;
             btnSort.Text = "Sortera kategori A-Ö";
             btnSort.UseVisualStyleBackColor = true;
+            btnSort.Click += btnSort_Click;
             // 
             // lblSpecificInformationEpisode
             // 
@@ -489,7 +490,7 @@
         private Button btnSaveCreatedCategory;
         private TextBox tbCreateCategory;
         private TextBox tbEditCategoryName;
-        private TextBox textBox3;
+        private TextBox tbEditPodcastCategory;
         private TextBox tbEditName;
         private RichTextBox rbtMoreInformationEpisode;
         private Label lblCreateCategory;
