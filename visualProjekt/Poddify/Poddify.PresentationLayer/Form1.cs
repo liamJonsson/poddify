@@ -26,6 +26,9 @@ namespace Poddify.PresentationLayer
             btnDeletePodcast.Enabled = false;
             tbPodcastTitle.Enabled = false;
             tbCategory.Enabled = false;
+            btnDeleteCategory.Enabled = false;
+            btnSaveCategory.Enabled = false;
+            btnSaveCreatedCategory.Enabled = false;
 
             showAllPodcasts();
         }
@@ -209,10 +212,12 @@ namespace Poddify.PresentationLayer
                 }
 
                 else
-                {                   
+                {
                     await LoadAllCategoriesAsync();
 
                     tbCreateCategory.Clear();
+
+                    btnSaveCreatedCategory.Enabled = false;
 
                     MessageBox.Show("Kategorin sparades!");
                 }
@@ -406,7 +411,6 @@ namespace Poddify.PresentationLayer
         private async void btnSaveCategory_Click(object sender, EventArgs e)
         {
             string selectedCategory = (string)lbMyCategories.SelectedItem;
-
             Category oneCategory = await oneService.GetCategoryByNameAsync(selectedCategory);
 
             if (oneCategory != null)
@@ -421,11 +425,17 @@ namespace Poddify.PresentationLayer
 
                         if (updated)
                         {
+
+                            
+
                             await LoadAllCategoriesAsync();
 
                             tbEditCategoryName.Clear();
 
-                            MessageBox.Show("Kategorinamnet har uppdaterats!");                        
+                            btnSaveCategory.Enabled = false;
+                            btnDeleteCategory.Enabled = false;
+
+                            MessageBox.Show("Kategorinamnet har uppdaterats!");
                         }
                         else
                         {
@@ -444,5 +454,58 @@ namespace Poddify.PresentationLayer
                 }
             }
         }
+
+        private async void btnDeleteCategory_Click(object sender, EventArgs e)
+        {
+            if (lbMyCategories.SelectedItem == null)
+            {
+                MessageBox.Show("Markera kategorin du vill ändra namnet på");
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "Vill du verkligen ta bort kategorin?",
+                "Bekräfta borttagning",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Hand);
+
+            try
+            {
+
+                if (result == DialogResult.Yes)
+                {
+                    string selectedCategory = (string)lbMyCategories.SelectedItem;
+                    Category oneCategory = await oneService.GetCategoryByNameAsync(selectedCategory);
+
+                    await oneService.DeleteCategoryAsync(oneCategory.Id);
+               
+                    LoadAllCategoriesAsync();
+
+                    btnSaveCategory.Enabled = false;
+                    btnDeleteCategory.Enabled = false;
+
+                    MessageBox.Show("Kategorin har raderats");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när kategorin skulle tas bort");
+                Console.WriteLine(ex.Message);
+            }
+
+        }
+
+        private void lbMyCategories_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnDeleteCategory.Enabled = true;
+            btnSaveCategory.Enabled = true;
+        }
+
+        private void tbCreateCategory_TextChanged(object sender, EventArgs e)
+        {
+            btnSaveCreatedCategory.Enabled = true;
+        }
     }
 }
+

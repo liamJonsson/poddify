@@ -250,6 +250,7 @@
             lbMyCategories.Name = "lbMyCategories";
             lbMyCategories.Size = new Size(262, 244);
             lbMyCategories.TabIndex = 9;
+            lbMyCategories.SelectedIndexChanged += lbMyCategories_SelectedIndexChanged;
             // 
             // lblMyCatgories
             // 
@@ -269,6 +270,7 @@
             btnDeleteCategory.TabIndex = 11;
             btnDeleteCategory.Text = "Ta bort kategori";
             btnDeleteCategory.UseVisualStyleBackColor = true;
+            btnDeleteCategory.Click += btnDeleteCategory_Click;
             // 
             // btnSaveCategory
             // 
@@ -311,6 +313,7 @@
             tbCreateCategory.Name = "tbCreateCategory";
             tbCreateCategory.Size = new Size(165, 27);
             tbCreateCategory.TabIndex = 21;
+            tbCreateCategory.TextChanged += tbCreateCategory_TextChanged;
             // 
             // btnSaveCreatedCategory
             // 
