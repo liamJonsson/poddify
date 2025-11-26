@@ -157,7 +157,7 @@ namespace Poddify.PresentationLayer
                     MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
                 }
                 clearAllFields();
-
+                showAllPodcasts();
             }
             catch (Exception ex)
             {
@@ -299,6 +299,8 @@ namespace Poddify.PresentationLayer
                     MessageBox.Show("Vänligen ange ett giltigt kategorinamn");
                 }
             }
+            clearAllFields();
+            showAllPodcasts();
         }
 
         private async void btnDeleteCategory_Click(object sender, EventArgs e)
@@ -340,7 +342,8 @@ namespace Poddify.PresentationLayer
                 MessageBox.Show("Något gick fel när kategorin skulle tas bort");
                 Console.WriteLine(ex.Message);
             }
-
+            clearAllFields();
+            showAllPodcasts();
         }
 
         private void lbMyCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -365,7 +368,7 @@ namespace Poddify.PresentationLayer
             foreach (Podcast onePodcast in allPodcasts)
             {
                 string categoryId = onePodcast.CategoryId;
-                string categoryName = "?";
+                string categoryName = "*Okategoriserad*";
 
                 foreach (Category oneCategory in allCategories)
                 {
@@ -375,10 +378,8 @@ namespace Poddify.PresentationLayer
                         break;
                     }
                 }
-
                 lbMyPodcasts.Items.Add($"{onePodcast.Title} - {categoryName}");
             }
-
         }
 
         // Ta bort HTML-taggar från en sträng

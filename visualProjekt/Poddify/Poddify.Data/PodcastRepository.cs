@@ -43,41 +43,28 @@ namespace Poddify.DataLayer
             var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
 
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();
-
-            //var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
-
-            //if (session != null)
-            //{
-            //    return await podcastCollection.Find(session, filter).FirstOrDefaultAsync();
-            //}
-
-            ////Vi vill alltid använda oss av transaktioner och då returnerar vi null om sessionen är null
-            //else
-            //{
-            //    return null;
-            //}
         }
 
         //Ändra namnet på en podcast
-        public async Task<bool> UpdateNameAsync(string id, string newTitle)
+        public async Task<bool> UpdateNameAsync(string id, string newTitle, IClientSessionHandle session)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
             var update = Builders<Podcast>.Update.Set(p => p.Title, newTitle);
-            return (await podcastCollection.UpdateOneAsync(filter, update)).ModifiedCount > 0;
+            return (await podcastCollection.UpdateOneAsync(session, filter, update)).ModifiedCount > 0;
         }
 
         //Ändra kategorin på en podcast
-        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId)
+        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId, IClientSessionHandle session)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, id);
             var update = Builders<Podcast>.Update.Set(p => p.CategoryId, newCategoryId);
-            return (await podcastCollection.UpdateOneAsync(filter, update)).ModifiedCount > 0;
+            return (await podcastCollection.UpdateOneAsync(session, filter, update)).ModifiedCount > 0;
         }
 
-        public async Task DeletePodcastAsync(string enPodcastId)
+        public async Task DeletePodcastAsync(string enPodcastId, IClientSessionHandle session)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, enPodcastId);
-            await podcastCollection.DeleteOneAsync(filter);
+            await podcastCollection.DeleteOneAsync(session, filter);
         }
 
     }

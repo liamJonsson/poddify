@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 
 namespace Poddify.DataLayer
@@ -19,10 +20,15 @@ namespace Poddify.DataLayer
         }
 
         //Skapar en ny kategori och lägger in den i en kollektion i databasen
-        public async Task AddCategoryAsync(string name)
+        public async Task AddCategoryAsync(string name, IClientSessionHandle session)
         {
             var newCategory = new Category { Name = name };
-            await categoryCollection.InsertOneAsync(newCategory);
+
+            if (session == null)
+            {
+                Console.WriteLine("Transaktionen är inte startad");
+            }
+            await categoryCollection.InsertOneAsync(session, newCategory);
         }
 
 
@@ -47,18 +53,18 @@ namespace Poddify.DataLayer
         }
 
         //Ändra namnet på en kategori
-        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName)
+        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName, IClientSessionHandle session)
         {
             var filter = Builders<Category>.Filter.Eq(c => c.Id, categoryId);
             var update = Builders<Category>.Update.Set(c => c.Name, newName);
-            return (await categoryCollection.UpdateOneAsync(filter, update)).ModifiedCount > 0;
+            return (await categoryCollection.UpdateOneAsync(session, filter, update)).ModifiedCount > 0;
         }
 
         //Radera en kategori
-        public async Task DeleteCategoryAsync(string categoryId)
+        public async Task DeleteCategoryAsync(string categoryId, IClientSessionHandle session)
         {
             var filter = Builders<Category>.Filter.Eq(c => c.Id, categoryId);
-            await categoryCollection.DeleteOneAsync(filter);
+            await categoryCollection.DeleteOneAsync(session, filter);
         }
     }
 }
