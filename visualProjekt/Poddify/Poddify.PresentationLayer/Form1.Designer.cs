@@ -103,7 +103,7 @@
             // 
             lblInformation.AutoSize = true;
             lblInformation.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblInformation.Location = new Point(249, 505);
+            lblInformation.Location = new Point(111, 509);
             lblInformation.Name = "lblInformation";
             lblInformation.Size = new Size(337, 20);
             lblInformation.TabIndex = 24;
@@ -112,7 +112,7 @@
             // 
             // btnDeletePodcast
             // 
-            btnDeletePodcast.Location = new Point(273, 444);
+            btnDeletePodcast.Location = new Point(111, 451);
             btnDeletePodcast.Name = "btnDeletePodcast";
             btnDeletePodcast.Size = new Size(257, 29);
             btnDeletePodcast.TabIndex = 23;
@@ -122,23 +122,23 @@
             // 
             // tbEditPodcastCategory
             // 
-            tbEditPodcastCategory.Location = new Point(271, 392);
+            tbEditPodcastCategory.Location = new Point(111, 395);
             tbEditPodcastCategory.Name = "tbEditPodcastCategory";
             tbEditPodcastCategory.Size = new Size(154, 27);
             tbEditPodcastCategory.TabIndex = 15;
             // 
             // tbEditName
             // 
-            tbEditName.Location = new Point(271, 326);
+            tbEditName.Location = new Point(111, 329);
             tbEditName.Name = "tbEditName";
             tbEditName.Size = new Size(154, 27);
             tbEditName.TabIndex = 13;
             // 
             // rbtMoreInformationEpisode
             // 
-            rbtMoreInformationEpisode.Location = new Point(867, 62);
+            rbtMoreInformationEpisode.Location = new Point(948, 62);
             rbtMoreInformationEpisode.Name = "rbtMoreInformationEpisode";
-            rbtMoreInformationEpisode.Size = new Size(245, 224);
+            rbtMoreInformationEpisode.Size = new Size(350, 224);
             rbtMoreInformationEpisode.TabIndex = 2;
             rbtMoreInformationEpisode.Text = "";
             // 
@@ -153,7 +153,7 @@
             // lblEditCategory
             // 
             lblEditCategory.AutoSize = true;
-            lblEditCategory.Location = new Point(271, 369);
+            lblEditCategory.Location = new Point(111, 372);
             lblEditCategory.Name = "lblEditCategory";
             lblEditCategory.Size = new Size(190, 20);
             lblEditCategory.TabIndex = 16;
@@ -163,7 +163,7 @@
             // lbEditName
             // 
             lbEditName.AutoSize = true;
-            lbEditName.Location = new Point(271, 304);
+            lbEditName.Location = new Point(111, 307);
             lbEditName.Name = "lbEditName";
             lbEditName.Size = new Size(146, 20);
             lbEditName.TabIndex = 14;
@@ -171,7 +171,7 @@
             // 
             // btnEditCategory
             // 
-            btnEditCategory.Location = new Point(431, 392);
+            btnEditCategory.Location = new Point(271, 395);
             btnEditCategory.Name = "btnEditCategory";
             btnEditCategory.Size = new Size(99, 29);
             btnEditCategory.TabIndex = 8;
@@ -181,7 +181,7 @@
             // 
             // btnEditName
             // 
-            btnEditName.Location = new Point(431, 325);
+            btnEditName.Location = new Point(271, 328);
             btnEditName.Name = "btnEditName";
             btnEditName.Size = new Size(99, 29);
             btnEditName.TabIndex = 7;
@@ -191,7 +191,7 @@
             // 
             // btnSort
             // 
-            btnSort.Location = new Point(372, 28);
+            btnSort.Location = new Point(306, 28);
             btnSort.Name = "btnSort";
             btnSort.Size = new Size(155, 29);
             btnSort.TabIndex = 6;
@@ -202,7 +202,7 @@
             // lblSpecificInformationEpisode
             // 
             lblSpecificInformationEpisode.AutoSize = true;
-            lblSpecificInformationEpisode.Location = new Point(867, 32);
+            lblSpecificInformationEpisode.Location = new Point(948, 32);
             lblSpecificInformationEpisode.Name = "lblSpecificInformationEpisode";
             lblSpecificInformationEpisode.Size = new Size(121, 20);
             lblSpecificInformationEpisode.TabIndex = 5;
@@ -211,7 +211,7 @@
             // lblEpisodesOfPodcast
             // 
             lblEpisodesOfPodcast.AutoSize = true;
-            lblEpisodesOfPodcast.Location = new Point(563, 32);
+            lblEpisodesOfPodcast.Location = new Point(529, 32);
             lblEpisodesOfPodcast.Name = "lblEpisodesOfPodcast";
             lblEpisodesOfPodcast.Size = new Size(112, 20);
             lblEpisodesOfPodcast.TabIndex = 4;
@@ -220,7 +220,7 @@
             // lblMyPodcasts
             // 
             lblMyPodcasts.AutoSize = true;
-            lblMyPodcasts.Location = new Point(271, 32);
+            lblMyPodcasts.Location = new Point(111, 32);
             lblMyPodcasts.Name = "lblMyPodcasts";
             lblMyPodcasts.Size = new Size(95, 20);
             lblMyPodcasts.TabIndex = 3;
@@ -229,18 +229,18 @@
             // lbEpisodesOfAPodcast
             // 
             lbEpisodesOfAPodcast.FormattingEnabled = true;
-            lbEpisodesOfAPodcast.Location = new Point(563, 62);
+            lbEpisodesOfAPodcast.Location = new Point(529, 62);
             lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
-            lbEpisodesOfAPodcast.Size = new Size(258, 224);
+            lbEpisodesOfAPodcast.Size = new Size(350, 224);
             lbEpisodesOfAPodcast.TabIndex = 1;
             lbEpisodesOfAPodcast.SelectedIndexChanged += lbEpisodesOfAPodcast_SelectedIndexChanged;
             // 
             // lbMyPodcasts
             // 
             lbMyPodcasts.FormattingEnabled = true;
-            lbMyPodcasts.Location = new Point(271, 62);
+            lbMyPodcasts.Location = new Point(111, 62);
             lbMyPodcasts.Name = "lbMyPodcasts";
-            lbMyPodcasts.Size = new Size(257, 224);
+            lbMyPodcasts.Size = new Size(350, 224);
             lbMyPodcasts.TabIndex = 0;
             lbMyPodcasts.SelectedIndexChanged += lbMyPodcasts_SelectedIndexChanged;
             // 
