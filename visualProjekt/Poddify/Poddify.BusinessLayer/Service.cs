@@ -1,4 +1,5 @@
-﻿using Poddify.DataLayer;
+﻿using MongoDB.Driver;
+using Poddify.DataLayer;
 using Poddify.Models;
 using System;
 using System.Collections.Generic;
@@ -6,19 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Poddify.BusinessLayer
 {
     public class Service
     {
-        private DatabaseContext db = new DatabaseContext();
+        private DatabaseContext db;
         private PodcastClient podcastClient;
         private PodcastRepository podcastRepo;
         private CategoryRepository categoryRepo;
+        private readonly IMongoClient client;
         public Service(PodcastClient podcastClient)
         {
+            db = new DatabaseContext();
             this.podcastClient = podcastClient;
             podcastRepo = new PodcastRepository(db);
             categoryRepo = new CategoryRepository(db); //db för att å den att fungera
+            client = db.Client;
         }
 
         //------------------- Rssflöde ------------------//
@@ -44,15 +49,26 @@ namespace Poddify.BusinessLayer
         //Lägger till en podcast i min samling
         public async Task AddPodcastAsync(Podcast onePodcast) //Insert transaction
         {
-            Podcast existing = await podcastRepo.GetPodcastByRssUrlAsync(onePodcast.RssUrl);
+            using var session = await client.StartSessionAsync();
+            session.StartTransaction();
 
-            if (existing == null)
+            try
             {
-                await podcastRepo.AddPodcastAsync(onePodcast);
+                var existing = await podcastRepo.GetPodcastByRssUrlAsync(onePodcast.RssUrl);
+
+                if (existing != null)
+                {
+                    Console.WriteLine("Felmeddelande: Kan inte lägga till Podd");
+                }
+
+                await podcastRepo.AddPodcastAsync(onePodcast, session);
+
+                await session.CommitTransactionAsync();
             }
-            else
+            catch (Exception)
             {
-                throw new ArgumentException("Felmeddelande: Kan inte lägga till Podd");
+                await session.AbortTransactionAsync();
+                Console.WriteLine("Transaktionen misslyckades och har avbrutits.");
             }
         }
 

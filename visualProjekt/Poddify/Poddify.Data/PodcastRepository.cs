@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Collections.Specialized.BitVector32;
 
 
 namespace Poddify.DataLayer
@@ -21,9 +22,13 @@ namespace Poddify.DataLayer
 
 
         //Lägger till i min samling (sparas i databasen)
-        public async Task AddPodcastAsync(Podcast onePodcast)
+        public async Task AddPodcastAsync(Podcast onePodcast, IClientSessionHandle session)
         {
-            await podcastCollection.InsertOneAsync(onePodcast);
+            if (session == null)
+            {
+                Console.WriteLine("Transaktion krävs.");
+            }
+            await podcastCollection.InsertOneAsync(session, onePodcast);
         }
 
         //Visar en lista över alla podcasts sparade i min samling
@@ -36,7 +41,21 @@ namespace Poddify.DataLayer
         public async Task<Podcast?> GetPodcastByRssUrlAsync(string rssUrl)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
+
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();
+
+            //var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
+
+            //if (session != null)
+            //{
+            //    return await podcastCollection.Find(session, filter).FirstOrDefaultAsync();
+            //}
+
+            ////Vi vill alltid använda oss av transaktioner och då returnerar vi null om sessionen är null
+            //else
+            //{
+            //    return null;
+            //}
         }
 
         //Ändra namnet på en podcast

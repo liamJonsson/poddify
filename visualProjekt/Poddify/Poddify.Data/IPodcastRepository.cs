@@ -1,4 +1,5 @@
-﻿using Poddify.Models;
+﻿using MongoDB.Driver;
+using Poddify.Models;
 
 
 namespace Poddify.DataLayer
