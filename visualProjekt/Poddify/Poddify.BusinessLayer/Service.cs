@@ -42,10 +42,8 @@ namespace Poddify.BusinessLayer
         //------------------- Podcastmetoder ------------------//
 
         //Lägger till en podcast i min samling
-        public async Task AddPodcastAsync(Podcast onePodcast)
+        public async Task AddPodcastAsync(Podcast onePodcast) //Insert transaction
         {
-            /*Podcast existing = await podcastRepo.GetPodcastByIdAsync(onePodcast.Id);*/
-
             Podcast existing = await podcastRepo.GetPodcastByRssUrlAsync(onePodcast.RssUrl);
 
             if (existing == null)
@@ -70,13 +68,13 @@ namespace Poddify.BusinessLayer
         }
 
         //Uppdaterar namnet på en podcast
-        public async Task<bool> UpdateNameAsync(string id, string newTitle)
+        public async Task<bool> UpdateNameAsync(string id, string newTitle) //Update transaction
         {
             return await podcastRepo.UpdateNameAsync(id, newTitle);
         }
 
         //Uppdaterar kategorin för en podcast
-        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId)
+        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId) //Updatetransaction
         {
             var existing = categoryRepo.GetCategoryByIdAsync(newCategoryId);
             if (existing != null)
@@ -87,7 +85,7 @@ namespace Poddify.BusinessLayer
         }
 
         //Raderar en podcast
-        public async Task DeletePodcastAsync(string enPodcastId)
+        public async Task DeletePodcastAsync(string enPodcastId) //Delete transaction
         {
             await podcastRepo.DeletePodcastAsync(enPodcastId);
         }
@@ -95,7 +93,7 @@ namespace Poddify.BusinessLayer
         //------------------- Kategorimetoder ------------------//
 
         //Lägger till en kategori
-        public async Task<bool> AddCategoryAsync(string name)
+        public async Task<bool> AddCategoryAsync(string name) //Insert transaction
         {
             if(string.IsNullOrWhiteSpace(name))
             {
@@ -136,7 +134,7 @@ namespace Poddify.BusinessLayer
         }
 
         //Uppdaterar namnet på en kategori
-        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName)
+        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName) //Update transaction
         {
             var existing = await categoryRepo.GetCategoryByNameAsync(newName);
 
@@ -152,7 +150,7 @@ namespace Poddify.BusinessLayer
         }
 
         //Raderar en kategori
-        public async Task DeleteCategoryAsync(string categoryId)
+        public async Task DeleteCategoryAsync(string categoryId) //Delete transaction
         {
             await categoryRepo.DeleteCategoryAsync(categoryId);
         }
