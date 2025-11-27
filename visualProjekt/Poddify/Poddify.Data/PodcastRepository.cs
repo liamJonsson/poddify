@@ -1,12 +1,5 @@
 ﻿using MongoDB.Driver;
 using Poddify.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Collections.Specialized.BitVector32;
-
 
 namespace Poddify.DataLayer
 {
@@ -19,15 +12,9 @@ namespace Poddify.DataLayer
             podcastCollection = db.podcastCollection;
         }
 
-
-
         //Lägger till i min samling (sparas i databasen)
         public async Task AddPodcastAsync(Podcast onePodcast, IClientSessionHandle session)
         {
-            if (session == null)
-            {
-                Console.WriteLine("Transaktion krävs.");
-            }
             await podcastCollection.InsertOneAsync(session, onePodcast);
         }
 
@@ -41,7 +28,6 @@ namespace Poddify.DataLayer
         public async Task<Podcast?> GetPodcastByRssUrlAsync(string rssUrl)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.RssUrl, rssUrl);
-
             return await podcastCollection.Find(filter).FirstOrDefaultAsync();
         }
 
@@ -61,6 +47,7 @@ namespace Poddify.DataLayer
             return (await podcastCollection.UpdateOneAsync(session, filter, update)).ModifiedCount > 0;
         }
 
+        //Tar bort en podcast från min samling
         public async Task DeletePodcastAsync(string enPodcastId, IClientSessionHandle session)
         {
             var filter = Builders<Podcast>.Filter.Eq(p => p.Id, enPodcastId);

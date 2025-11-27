@@ -1,28 +1,23 @@
 ﻿using MongoDB.Driver;
 using Poddify.DataLayer;
 using Poddify.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 
 namespace Poddify.BusinessLayer
 {
     public class Service
     {
-        private DatabaseContext db;
-        private PodcastClient podcastClient;
-        private PodcastRepository podcastRepo;
-        private CategoryRepository categoryRepo;
+        private readonly DatabaseContext db;
+        private readonly PodcastClient podcastClient;
+        private readonly PodcastRepository podcastRepo;
+        private readonly CategoryRepository categoryRepo;
         private readonly IMongoClient client;
+
         public Service(PodcastClient podcastClient)
         {
             db = new DatabaseContext();
             this.podcastClient = podcastClient;
             podcastRepo = new PodcastRepository(db);
-            categoryRepo = new CategoryRepository(db); //db för att å den att fungera
+            categoryRepo = new CategoryRepository(db); 
             client = db.Client;
         }
 
@@ -32,13 +27,11 @@ namespace Poddify.BusinessLayer
         public async Task<List<Episode>> GetAllEpisodes(Podcast onePodcast)
         {
             var podcast = await podcastClient.GetPodcast(onePodcast.RssUrl);
-
             var episodes = podcast.Episodes;
 
             foreach (var episode in episodes)
             {
                 episode.PodcastId = onePodcast.Id;
-                //Sätter ett nytt unikt id för episoden eftersom vi inte kan garantera att id:t som genereras är unikt
                 episode.Id = onePodcast.Id + "+" + episode.Id;
             }
             return episodes;
@@ -47,7 +40,7 @@ namespace Poddify.BusinessLayer
         //------------------- Podcastmetoder ------------------//
 
         //Lägger till en podcast i min samling
-        public async Task AddPodcastAsync(Podcast onePodcast) //Insert transaction
+        public async Task AddPodcastAsync(Podcast onePodcast) 
         {
             using var session = await client.StartSessionAsync();
             session.StartTransaction();
@@ -59,10 +52,10 @@ namespace Poddify.BusinessLayer
                 if (existing != null)
                 {
                     Console.WriteLine("Felmeddelande: Kan inte lägga till Podd");
+                    await session.AbortTransactionAsync();
+                    return;
                 }
-
                 await podcastRepo.AddPodcastAsync(onePodcast, session);
-
                 await session.CommitTransactionAsync();
             }
             catch (Exception)
@@ -78,15 +71,16 @@ namespace Poddify.BusinessLayer
             return await podcastRepo.GetAllPodcastsAsync();
         }
 
+        //Hämtar en podcast från vår samling via url:en
         public async Task<Podcast?> GetPodcastByRssUrlAsync(string rssUrl)
         {
             return await podcastRepo.GetPodcastByRssUrlAsync(rssUrl);
         }
 
         //Uppdaterar namnet på en podcast
-        public async Task<bool> UpdateNameAsync(string id, string newTitle) //Update transaction
+        public async Task<bool> UpdateNameAsync(string id, string newTitle)
         {
-            using var session = client.StartSession();
+            using var session = await client.StartSessionAsync();
             session.StartTransaction();
 
             try
@@ -103,9 +97,9 @@ namespace Poddify.BusinessLayer
         }
 
         //Uppdaterar kategorin för en podcast
-        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId) //Updatetransaction
+        public async Task<bool> UpdateCategoryAsync(string id, string newCategoryId)
         {
-            using var session = db.Client.StartSession();
+            using var session = await client.StartSessionAsync();
             session.StartTransaction();
 
             try
@@ -129,9 +123,9 @@ namespace Poddify.BusinessLayer
         }
 
         //Raderar en podcast
-        public async Task DeletePodcastAsync(string enPodcastId) //Delete transaction
+        public async Task DeletePodcastAsync(string enPodcastId)
         {
-            using var session = client.StartSession();
+            using var session = await client.StartSessionAsync();
             session.StartTransaction();
 
             try
@@ -148,7 +142,7 @@ namespace Poddify.BusinessLayer
         //------------------- Kategorimetoder ------------------//
 
         //Lägger till en kategori
-        public async Task<bool> AddCategoryAsync(string name) //Insert transaction
+        public async Task<bool> AddCategoryAsync(string name)
         {
             using var session = await client.StartSessionAsync();
             session.StartTransaction();
@@ -164,7 +158,6 @@ namespace Poddify.BusinessLayer
                 }
 
                 await categoryRepo.AddCategoryAsync(name, session);
-
                 await session.CommitTransactionAsync();
                 return false;
             }
@@ -195,9 +188,9 @@ namespace Poddify.BusinessLayer
         }
 
         //Uppdaterar namnet på en kategori
-        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName) //Update transaction
-        {          
-            using var session = client.StartSession();
+        public async Task<bool> UpdateCategoryNameAsync(string categoryId, string newName)
+        {
+            using var session = await client.StartSessionAsync();
             session.StartTransaction();
 
             try
@@ -221,15 +214,14 @@ namespace Poddify.BusinessLayer
         }
 
         //Raderar en kategori
-        public async Task DeleteCategoryAsync(string categoryId) //Delete transaction
+        public async Task DeleteCategoryAsync(string categoryId)
         {
-            using var session = client.StartSession();
+            using var session = await client.StartSessionAsync();
             session.StartTransaction();
 
             try
             {
                 await categoryRepo.DeleteCategoryAsync(categoryId, session);
-
                 await session.CommitTransactionAsync();
             }
             catch

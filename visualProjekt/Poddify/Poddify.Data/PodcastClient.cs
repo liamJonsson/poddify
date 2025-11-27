@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ServiceModel.Syndication;
+﻿using System.ServiceModel.Syndication;
 using System.Xml;
 using Poddify.Models;
 
@@ -11,7 +6,7 @@ namespace Poddify.DataLayer
 {
     public class PodcastClient
     {
-        private HttpClient oneHttpClient;
+        private readonly HttpClient oneHttpClient;
 
         public PodcastClient(HttpClient oneHttpClient)
         {

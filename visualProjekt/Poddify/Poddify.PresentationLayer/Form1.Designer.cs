@@ -97,7 +97,6 @@
             myCollection.TabIndex = 1;
             myCollection.Text = "Mina poddar";
             myCollection.UseVisualStyleBackColor = true;
-            myCollection.Click += myCollection_Click;
             // 
             // lblInformation
             // 
@@ -108,7 +107,6 @@
             lblInformation.Size = new Size(337, 20);
             lblInformation.TabIndex = 24;
             lblInformation.Text = "Markera en rad för att redigera eller ta bort en podd";
-            lblInformation.Click += lblInformation_Click;
             // 
             // btnDeletePodcast
             // 
@@ -126,6 +124,7 @@
             tbEditPodcastCategory.Name = "tbEditPodcastCategory";
             tbEditPodcastCategory.Size = new Size(154, 27);
             tbEditPodcastCategory.TabIndex = 15;
+            tbEditPodcastCategory.TextChanged += tbEditPodcastCategory_TextChanged;
             // 
             // tbEditName
             // 
@@ -133,6 +132,7 @@
             tbEditName.Name = "tbEditName";
             tbEditName.Size = new Size(154, 27);
             tbEditName.TabIndex = 13;
+            tbEditName.TextChanged += tbEditName_TextChanged;
             // 
             // rbtMoreInformationEpisode
             // 
@@ -144,11 +144,10 @@
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(1082, 413);
+            label1.Location = new Point(0, 0);
             label1.Name = "label1";
-            label1.Size = new Size(0, 20);
-            label1.TabIndex = 19;
+            label1.Size = new Size(100, 23);
+            label1.TabIndex = 25;
             // 
             // lblEditCategory
             // 
@@ -158,7 +157,6 @@
             lblEditCategory.Size = new Size(190, 20);
             lblEditCategory.TabIndex = 16;
             lblEditCategory.Text = "Redigera poddens kategori";
-            lblEditCategory.Click += lblEditCategory_Click;
             // 
             // lbEditName
             // 
@@ -261,7 +259,6 @@
             lblMyCatgories.Size = new Size(114, 20);
             lblMyCatgories.TabIndex = 10;
             lblMyCatgories.Text = "Mina kategorier";
-            lblMyCatgories.Click += label1_Click;
             // 
             // btnDeleteCategory
             // 
@@ -355,7 +352,6 @@
             mainFrame.TabIndex = 0;
             mainFrame.Text = "Startsida";
             mainFrame.UseVisualStyleBackColor = true;
-            mainFrame.Click += mainFrame_Click;
             // 
             // label2
             // 
@@ -366,7 +362,6 @@
             label2.Size = new Size(357, 20);
             label2.TabIndex = 25;
             label2.Text = "Markera en rad för att redigera eller ta bort en kategori";
-            label2.Click += label2_Click;
             // 
             // tbCategory
             // 
@@ -389,7 +384,6 @@
             rbtSpecificEpisode.Size = new Size(397, 244);
             rbtSpecificEpisode.TabIndex = 4;
             rbtSpecificEpisode.Text = "";
-            rbtSpecificEpisode.TextChanged += rbtSpecificEpisode_TextChanged;
             // 
             // tbURL
             // 
@@ -397,6 +391,7 @@
             tbURL.Name = "tbURL";
             tbURL.Size = new Size(406, 27);
             tbURL.TabIndex = 1;
+            tbURL.TextChanged += tbURL_TextChanged;
             // 
             // lblGiveCategoryToPodcast
             // 
@@ -406,7 +401,6 @@
             lblGiveCategoryToPodcast.Size = new Size(137, 20);
             lblGiveCategoryToPodcast.TabIndex = 8;
             lblGiveCategoryToPodcast.Text = "Tilldela en kategori";
-            lblGiveCategoryToPodcast.Click += lblGiveCategoryToPodcast_Click;
             // 
             // lblNamePodcast
             // 
