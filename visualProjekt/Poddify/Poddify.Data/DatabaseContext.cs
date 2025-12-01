@@ -13,7 +13,7 @@ namespace Poddify.DataLayer
         public DatabaseContext()
         {
             Client = new MongoClient("mongodb+srv://poddUser:poddPassword@poddify.wqdsssd.mongodb.net/?appName=Poddify");
-            var _database = Client.GetDatabase("PoddifyDB");
+            var _database = Client.GetDatabase("Opponering");
             podcastCollection = _database.GetCollection<Podcast>("Podcasts");
             categoryCollection = _database.GetCollection<Category>("Categories");
         }
