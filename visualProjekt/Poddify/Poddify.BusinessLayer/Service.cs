@@ -8,17 +8,22 @@ namespace Poddify.BusinessLayer
     {
         private readonly DatabaseContext db;
         private readonly PodcastClient podcastClient;
-        private readonly PodcastRepository podcastRepo;
-        private readonly CategoryRepository categoryRepo;
+        private readonly IPodcastRepository podcastRepo;
+        private readonly ICategoryRepository categoryRepo;
         private readonly IMongoClient client;
 
-        public Service(PodcastClient podcastClient)
+        public Service(
+        PodcastClient podcastClient,
+        IPodcastRepository podcastRepo,
+        ICategoryRepository categoryRepo,
+        DatabaseContext db,
+        IMongoClient client)
         {
-            db = new DatabaseContext();
+            this.db = db;
             this.podcastClient = podcastClient;
-            podcastRepo = new PodcastRepository(db);
-            categoryRepo = new CategoryRepository(db); 
-            client = db.Client;
+            this.podcastRepo = podcastRepo;
+            this.categoryRepo = categoryRepo;
+            this.client = client;
         }
 
         //------------------- Rssflöde ------------------//
