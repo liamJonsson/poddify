@@ -67,6 +67,7 @@
             btnGetPodcast = new Button();
             lblURL = new Label();
             tabControl = new TabControl();
+            cbFilter = new ComboBox();
             myCollection.SuspendLayout();
             mainFrame.SuspendLayout();
             tabControl.SuspendLayout();
@@ -74,6 +75,7 @@
             // 
             // myCollection
             // 
+            myCollection.Controls.Add(cbFilter);
             myCollection.Controls.Add(lblInformation);
             myCollection.Controls.Add(btnDeletePodcast);
             myCollection.Controls.Add(tbEditPodcastCategory);
@@ -102,7 +104,7 @@
             // 
             lblInformation.AutoSize = true;
             lblInformation.Font = new Font("Segoe UI", 9F, FontStyle.Italic, GraphicsUnit.Point, 0);
-            lblInformation.Location = new Point(111, 509);
+            lblInformation.Location = new Point(111, 527);
             lblInformation.Name = "lblInformation";
             lblInformation.Size = new Size(337, 20);
             lblInformation.TabIndex = 24;
@@ -110,7 +112,7 @@
             // 
             // btnDeletePodcast
             // 
-            btnDeletePodcast.Location = new Point(111, 451);
+            btnDeletePodcast.Location = new Point(111, 485);
             btnDeletePodcast.Name = "btnDeletePodcast";
             btnDeletePodcast.Size = new Size(257, 29);
             btnDeletePodcast.TabIndex = 23;
@@ -120,7 +122,7 @@
             // 
             // tbEditPodcastCategory
             // 
-            tbEditPodcastCategory.Location = new Point(111, 395);
+            tbEditPodcastCategory.Location = new Point(111, 435);
             tbEditPodcastCategory.Name = "tbEditPodcastCategory";
             tbEditPodcastCategory.Size = new Size(154, 27);
             tbEditPodcastCategory.TabIndex = 15;
@@ -128,7 +130,7 @@
             // 
             // tbEditName
             // 
-            tbEditName.Location = new Point(111, 329);
+            tbEditName.Location = new Point(111, 369);
             tbEditName.Name = "tbEditName";
             tbEditName.Size = new Size(154, 27);
             tbEditName.TabIndex = 13;
@@ -136,7 +138,7 @@
             // 
             // rbtMoreInformationEpisode
             // 
-            rbtMoreInformationEpisode.Location = new Point(948, 62);
+            rbtMoreInformationEpisode.Location = new Point(948, 120);
             rbtMoreInformationEpisode.Name = "rbtMoreInformationEpisode";
             rbtMoreInformationEpisode.Size = new Size(350, 224);
             rbtMoreInformationEpisode.TabIndex = 2;
@@ -152,7 +154,7 @@
             // lblEditCategory
             // 
             lblEditCategory.AutoSize = true;
-            lblEditCategory.Location = new Point(111, 372);
+            lblEditCategory.Location = new Point(111, 412);
             lblEditCategory.Name = "lblEditCategory";
             lblEditCategory.Size = new Size(190, 20);
             lblEditCategory.TabIndex = 16;
@@ -161,7 +163,7 @@
             // lbEditName
             // 
             lbEditName.AutoSize = true;
-            lbEditName.Location = new Point(111, 307);
+            lbEditName.Location = new Point(111, 347);
             lbEditName.Name = "lbEditName";
             lbEditName.Size = new Size(146, 20);
             lbEditName.TabIndex = 14;
@@ -169,7 +171,7 @@
             // 
             // btnEditCategory
             // 
-            btnEditCategory.Location = new Point(271, 395);
+            btnEditCategory.Location = new Point(271, 435);
             btnEditCategory.Name = "btnEditCategory";
             btnEditCategory.Size = new Size(99, 29);
             btnEditCategory.TabIndex = 8;
@@ -179,7 +181,7 @@
             // 
             // btnEditName
             // 
-            btnEditName.Location = new Point(271, 328);
+            btnEditName.Location = new Point(271, 368);
             btnEditName.Name = "btnEditName";
             btnEditName.Size = new Size(99, 29);
             btnEditName.TabIndex = 7;
@@ -189,9 +191,9 @@
             // 
             // btnSort
             // 
-            btnSort.Location = new Point(306, 28);
+            btnSort.Location = new Point(285, 85);
             btnSort.Name = "btnSort";
-            btnSort.Size = new Size(155, 29);
+            btnSort.Size = new Size(176, 29);
             btnSort.TabIndex = 6;
             btnSort.Text = "Sortera kategori A-Ö";
             btnSort.UseVisualStyleBackColor = true;
@@ -200,34 +202,37 @@
             // lblSpecificInformationEpisode
             // 
             lblSpecificInformationEpisode.AutoSize = true;
-            lblSpecificInformationEpisode.Location = new Point(948, 32);
+            lblSpecificInformationEpisode.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSpecificInformationEpisode.Location = new Point(948, 64);
             lblSpecificInformationEpisode.Name = "lblSpecificInformationEpisode";
-            lblSpecificInformationEpisode.Size = new Size(121, 20);
+            lblSpecificInformationEpisode.Size = new Size(176, 28);
             lblSpecificInformationEpisode.TabIndex = 5;
             lblSpecificInformationEpisode.Text = "Mer om avsnittet";
             // 
             // lblEpisodesOfPodcast
             // 
             lblEpisodesOfPodcast.AutoSize = true;
-            lblEpisodesOfPodcast.Location = new Point(529, 32);
+            lblEpisodesOfPodcast.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblEpisodesOfPodcast.Location = new Point(529, 64);
             lblEpisodesOfPodcast.Name = "lblEpisodesOfPodcast";
-            lblEpisodesOfPodcast.Size = new Size(112, 20);
+            lblEpisodesOfPodcast.Size = new Size(162, 28);
             lblEpisodesOfPodcast.TabIndex = 4;
             lblEpisodesOfPodcast.Text = "Poddens avsnitt";
             // 
             // lblMyPodcasts
             // 
             lblMyPodcasts.AutoSize = true;
-            lblMyPodcasts.Location = new Point(111, 32);
+            lblMyPodcasts.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblMyPodcasts.Location = new Point(111, 64);
             lblMyPodcasts.Name = "lblMyPodcasts";
-            lblMyPodcasts.Size = new Size(95, 20);
+            lblMyPodcasts.Size = new Size(133, 28);
             lblMyPodcasts.TabIndex = 3;
             lblMyPodcasts.Text = "Mina poddar";
             // 
             // lbEpisodesOfAPodcast
             // 
             lbEpisodesOfAPodcast.FormattingEnabled = true;
-            lbEpisodesOfAPodcast.Location = new Point(529, 62);
+            lbEpisodesOfAPodcast.Location = new Point(529, 120);
             lbEpisodesOfAPodcast.Name = "lbEpisodesOfAPodcast";
             lbEpisodesOfAPodcast.Size = new Size(350, 224);
             lbEpisodesOfAPodcast.TabIndex = 1;
@@ -236,7 +241,7 @@
             // lbMyPodcasts
             // 
             lbMyPodcasts.FormattingEnabled = true;
-            lbMyPodcasts.Location = new Point(111, 62);
+            lbMyPodcasts.Location = new Point(111, 120);
             lbMyPodcasts.Name = "lbMyPodcasts";
             lbMyPodcasts.Size = new Size(350, 224);
             lbMyPodcasts.TabIndex = 0;
@@ -459,6 +464,15 @@
             tabControl.Size = new Size(1405, 583);
             tabControl.TabIndex = 0;
             // 
+            // cbFilter
+            // 
+            cbFilter.FormattingEnabled = true;
+            cbFilter.Location = new Point(285, 51);
+            cbFilter.Name = "cbFilter";
+            cbFilter.Size = new Size(176, 28);
+            cbFilter.TabIndex = 26;
+            cbFilter.SelectedIndexChanged += cbFilter_SelectedIndexChanged;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -467,7 +481,6 @@
             Controls.Add(tabControl);
             Name = "Form1";
             Text = "Form1";
-            Load += Form1_Load;
             myCollection.ResumeLayout(false);
             myCollection.PerformLayout();
             mainFrame.ResumeLayout(false);
@@ -517,5 +530,6 @@
         private Label lblURL;
         private TabControl tabControl;
         private Label label2;
+        private ComboBox cbFilter;
     }
 }

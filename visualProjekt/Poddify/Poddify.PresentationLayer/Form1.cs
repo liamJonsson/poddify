@@ -22,7 +22,8 @@ namespace Poddify.PresentationLayer
             oneService = new Service(oneClient);
             onePodcast = new Podcast();
             disableAllFields();
-            showAllPodcasts();
+            LoadAllCategoriesAsync();
+            LoadAllCategoriesComboBoxAsync();
         }
 
         private void disableAllFields()
@@ -135,25 +136,12 @@ namespace Poddify.PresentationLayer
                     MessageBox.Show("Vänligen välj en kategori för att kunna spara podden");
                 }
                 clearAllFields();
-                showAllPodcasts();
+                await showAllPodcastsAsync();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Det gick inte att spara podden");
                 Console.WriteLine(ex.Message);
-            }
-        }
-
-        //Fyller kategorilistan när sidan laddas
-        private async void Form1_Load(object sender, EventArgs e)
-        {
-            try
-            {
-                await LoadAllCategoriesAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Fel vid inläsning av kategorier: " + ex.Message);
             }
         }
 
@@ -194,6 +182,7 @@ namespace Poddify.PresentationLayer
                 else
                 {
                     await LoadAllCategoriesAsync();
+                    await LoadAllCategoriesComboBoxAsync();
                     tbCreateCategory.Clear();
                     btnSaveCreatedCategory.Enabled = false;
                     MessageBox.Show("Kategorin sparades!");
@@ -210,11 +199,18 @@ namespace Poddify.PresentationLayer
         //Hämtar och visar kategorier i listan
         private async Task LoadAllCategoriesAsync()
         {
-            lbMyCategories.Items.Clear();
-            var categories = await oneService.GetAllCategoriesAsync();
-            foreach (Category oneCategory in categories)
+            try
             {
-                lbMyCategories.Items.Add(oneCategory.Name);
+                lbMyCategories.Items.Clear();
+                allCategories = await oneService.GetAllCategoriesAsync();
+                foreach (Category oneCategory in allCategories)
+                {
+                    lbMyCategories.Items.Add(oneCategory.Name);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fel vid inläsning av kategorier: " + ex.Message);
             }
         }
 
@@ -237,6 +233,7 @@ namespace Poddify.PresentationLayer
                         if (updated)
                         {
                             await LoadAllCategoriesAsync();
+                            await LoadAllCategoriesComboBoxAsync();
 
                             tbEditCategoryName.Clear();
 
@@ -263,8 +260,7 @@ namespace Poddify.PresentationLayer
                     MessageBox.Show("Vänligen ange ett giltigt kategorinamn");
                 }
             }
-            clearAllFields();
-            showAllPodcasts();
+            clearAllFields();           
         }
 
         private async void btnDeleteCategory_Click(object sender, EventArgs e)
@@ -290,7 +286,8 @@ namespace Poddify.PresentationLayer
 
                     await oneService.DeleteCategoryAsync(oneCategory.Id);
 
-                    LoadAllCategoriesAsync();
+                    await LoadAllCategoriesAsync();
+                    await LoadAllCategoriesComboBoxAsync();
 
                     btnSaveCreatedCategory.Enabled = false;
                     btnSaveCategory.Enabled = false;
@@ -307,7 +304,6 @@ namespace Poddify.PresentationLayer
                 Console.WriteLine(ex.Message);
             }
             clearAllFields();
-            showAllPodcasts();
         }
 
         private void lbMyCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -330,25 +326,52 @@ namespace Poddify.PresentationLayer
         //---------------------------------------Mina poddar-------------------------------------//
 
         //Visar alla podcasts i min samling
-        private async void showAllPodcasts()
+        private async Task showAllPodcastsAsync()
         {
-            allPodcasts = await oneService.GetAllPodcastsAsync();
-            allCategories = await oneService.GetAllCategoriesAsync();
-
-            foreach (Podcast onePodcast in allPodcasts)
+            try
             {
-                string categoryId = onePodcast.CategoryId;
-                string categoryName = "*Okategoriserad*";
+                allPodcasts = await oneService.GetAllPodcastsAsync();
+                allCategories = await oneService.GetAllCategoriesAsync();
 
+                foreach (Podcast onePodcast in allPodcasts)
+                {
+                    string categoryId = onePodcast.CategoryId;
+                    string categoryName = "*Okategoriserad*";
+
+                    foreach (Category oneCategory in allCategories)
+                    {
+                        if (oneCategory.Id == categoryId)
+                        {
+                            categoryName = oneCategory.Name;
+                            break;
+                        }
+                    }
+                    lbMyPodcasts.Items.Add($"{onePodcast.Title} - {categoryName}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Något gick fel när poddarna skulle visas");
+            }
+        }
+
+        //Fyller filter-comboboxen med alla kategorier
+        private async Task LoadAllCategoriesComboBoxAsync()
+        {
+            try
+            {
+                cbFilter.Items.Clear();
+                cbFilter.Items.Add("Filtrera kategorier");
+                allCategories = await oneService.GetAllCategoriesAsync();
                 foreach (Category oneCategory in allCategories)
                 {
-                    if (oneCategory.Id == categoryId)
-                    {
-                        categoryName = oneCategory.Name;
-                        break;
-                    }
+                    cbFilter.Items.Add(oneCategory.Name);
                 }
-                lbMyPodcasts.Items.Add($"{onePodcast.Title} - {categoryName}");
+                cbFilter.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Fel vid inläsning av kategorier: " + ex.Message);
             }
         }
 
@@ -377,7 +400,7 @@ namespace Poddify.PresentationLayer
                 int idx = lbMyPodcasts.SelectedIndex;
                 Podcast selectedPodcast = allPodcasts[idx];
 
-                allEpisodes = await oneService.GetAllEpisodes(selectedPodcast);
+                allEpisodes = selectedPodcast.Episodes;
 
                 rbtMoreInformationEpisode.Clear();
                 lbEpisodesOfAPodcast.Items.Clear();
@@ -446,7 +469,7 @@ namespace Poddify.PresentationLayer
                     if (updated)
                     {
                         clearAllFields();
-                        showAllPodcasts();
+                        await showAllPodcastsAsync();
                         tbEditName.Enabled = false;
                         tbEditPodcastCategory.Enabled = false;
                         btnEditName.Enabled = false;
@@ -502,7 +525,7 @@ namespace Poddify.PresentationLayer
                         if (updated)
                         {
                             clearAllFields();
-                            showAllPodcasts();
+                            await showAllPodcastsAsync();
                             tbEditName.Enabled = false;
                             tbEditPodcastCategory.Enabled = false;
                             btnEditName.Enabled = false;
@@ -535,10 +558,10 @@ namespace Poddify.PresentationLayer
         private async void btnDeletePodcast_Click(object sender, EventArgs e)
         {
             var result = MessageBox.Show(
-            "Vill du ta bort podden?",       
-            "Bekräfta borttagning",          
-            MessageBoxButtons.YesNo,         
-            MessageBoxIcon.Hand);            
+            "Vill du ta bort podden?",
+            "Bekräfta borttagning",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Hand);
 
             try
             {
@@ -550,7 +573,7 @@ namespace Poddify.PresentationLayer
                     await oneService.DeletePodcastAsync(selectedPodcast.Id);
                 }
                 clearAllFields();
-                showAllPodcasts();
+                await showAllPodcastsAsync();
                 tbEditName.Enabled = false;
                 tbEditPodcastCategory.Enabled = false;
                 btnDeletePodcast.Enabled = false;
@@ -593,6 +616,29 @@ namespace Poddify.PresentationLayer
         private void tbEditPodcastCategory_TextChanged(object sender, EventArgs e)
         {
             btnEditCategory.Enabled = true;
+        }
+
+        private async void cbFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idx = cbFilter.SelectedIndex;
+            clearAllFields();
+
+            if (idx == 0)
+            {
+                await showAllPodcastsAsync();
+            }
+            else
+            {
+                Category selectedCategory = allCategories[idx - 1];
+                foreach (Podcast onePodcast in allPodcasts)
+                {
+                    if (onePodcast.CategoryId == selectedCategory.Id)
+                    {
+                        lbMyPodcasts.Items.Add($"{onePodcast.Title} - {selectedCategory.Name}");
+                    }
+                }
+            }
+
         }
     }
 }
