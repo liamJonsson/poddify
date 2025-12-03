@@ -240,8 +240,9 @@ namespace Poddify.PresentationLayer
 
                         if (updated)
                         {
+                            clearAllFields();
                             await LoadAllCategoriesAsync();
-                            await LoadAllCategoriesComboBoxAsync();
+                            await LoadAllCategoriesComboBoxAsync();                           
 
                             tbEditCategoryName.Clear();
 
@@ -268,7 +269,6 @@ namespace Poddify.PresentationLayer
                     MessageBox.Show("Vänligen ange ett giltigt kategorinamn");
                 }
             }
-            clearAllFields();           
         }
 
         private async void btnDeleteCategory_Click(object sender, EventArgs e)
@@ -294,6 +294,7 @@ namespace Poddify.PresentationLayer
 
                     await oneService.DeleteCategoryAsync(oneCategory.Id);
 
+                    clearAllFields();
                     await LoadAllCategoriesAsync();
                     await LoadAllCategoriesComboBoxAsync();
 
@@ -311,7 +312,7 @@ namespace Poddify.PresentationLayer
                 MessageBox.Show("Något gick fel när kategorin skulle tas bort");
                 Console.WriteLine(ex.Message);
             }
-            clearAllFields();
+            
         }
 
         private void lbMyCategories_SelectedIndexChanged(object sender, EventArgs e)
