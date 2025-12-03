@@ -15,8 +15,6 @@ namespace Poddify.PresentationLayer
             // see https://aka.ms/applicationconfiguration.
 
             HttpClient http = new HttpClient();
-            var client = new PodcastClient(http);
-            var service = new Service(client);
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

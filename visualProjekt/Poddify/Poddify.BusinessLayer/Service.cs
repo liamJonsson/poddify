@@ -6,20 +6,19 @@ namespace Poddify.BusinessLayer
 {
     public class Service
     {
-        private readonly DatabaseContext db;
         private readonly PodcastClient podcastClient;
         private readonly IPodcastRepository podcastRepo;
         private readonly ICategoryRepository categoryRepo;
         private readonly IMongoClient client;
 
-        public Service(
-        PodcastClient podcastClient,
-        IPodcastRepository podcastRepo,
-        ICategoryRepository categoryRepo,
-        DatabaseContext db,
-        IMongoClient client)
+        public Service
+        (
+            PodcastClient podcastClient,
+            IPodcastRepository podcastRepo,
+            ICategoryRepository categoryRepo,
+            IMongoClient client
+        )
         {
-            this.db = db;
             this.podcastClient = podcastClient;
             this.podcastRepo = podcastRepo;
             this.categoryRepo = categoryRepo;

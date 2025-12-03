@@ -1,4 +1,5 @@
 using MongoDB.Bson;
+using MongoDB.Driver;
 using Poddify.BusinessLayer;
 using Poddify.DataLayer;
 using Poddify.Models;
@@ -8,18 +9,25 @@ namespace Poddify.PresentationLayer
 {
     public partial class Form1 : Form
     {
-        private Service oneService;
+        private readonly Service oneService;
+        private readonly PodcastClient oneClient;
+        private readonly DatabaseContext db;
         private List<Episode> allEpisodes;
         private List<Podcast> allPodcasts;
         private List<Category> allCategories;
-        private PodcastClient oneClient;
         private Podcast onePodcast;
+        
 
         public Form1()
         {
             InitializeComponent();
+            //Instansierar nödvändiga fält för Serviceklassen
             oneClient = new PodcastClient(new HttpClient());
-            oneService = new Service(oneClient);
+            db = new DatabaseContext();
+            IPodcastRepository podcastRepo = new PodcastRepository(db);
+            ICategoryRepository categoryRepo = new CategoryRepository(db);
+
+            oneService = new Service(oneClient, podcastRepo, categoryRepo, db.Client);
             onePodcast = new Podcast();
             disableAllFields();
             LoadAllCategoriesAsync();
